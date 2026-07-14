@@ -1,0 +1,308 @@
+<header class="topbar">
+    <div class="topbar-left">
+
+        <button class="mob-menu-btn topbar-icon-btn d-lg-none"
+            onclick="document.getElementById('sidebar').classList.toggle('open')">
+            <i class="bi bi-list"></i>
+        </button>
+        <div class="topbar-icon-btn">
+            <i class="bi bi-person-square"></i>
+        </div>
+
+        <div class="topbar-text">
+            <div class="topbar-title" id="topbarTitle">Profile</div>
+            <small class="text-muted">Manage driving school details</small>
+        </div>
+    </div>
+
+</header>
+
+<div class="page-body">
+    <div class="container-fluid px-4">
+
+        <div class="card-table mt-4 p-4">
+
+            <!-- Header -->
+            <div class="d-flex align-items-center mb-4">
+                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center"
+                    style="width:70px;height:70px;">
+                    <i class="bi bi-building fs-2"></i>
+                </div>
+
+                <div class="ms-3">
+                    <h3 class="mb-1">SafeWheels Academy</h3>
+                    <p class="text-muted mb-0">
+                        Professional Driving School
+                    </p>
+                </div>
+
+                <button class="btn btn-outline-primary ms-auto" onclick="editSchoolProfile()">
+                    <i class="bi bi-pencil"></i> Edit Profile
+                </button>
+            </div>
+
+
+            <!-- School Information -->
+            <h5 class="mb-3">
+                <i class="bi bi-building text-primary"></i>
+                School Information
+            </h5>
+
+            <div class="table-responsive">
+                <table class="table">
+
+                    <tbody>
+
+                        <tr>
+                            <td width="25%">School Name</td>
+                            <td>SafeDrive Academy</td>
+                        </tr>
+
+                        <tr>
+                            <td>Driving School License</td>
+                            <td>DSL-987654</td>
+                        </tr>
+
+                        <tr>
+                            <td>Established Year</td>
+                            <td>2010</td>
+                        </tr>
+
+                        <tr>
+                            <td>Website</td>
+                            <td>www.safedrive.com</td>
+                        </tr>
+
+                        <tr>
+                            <td>Email</td>
+                            <td>info@safedrive.com</td>
+                        </tr>
+
+                        <tr>
+                            <td>Phone</td>
+                            <td>0771234567</td>
+                        </tr>
+
+                        <tr>
+                            <td>Description</td>
+                            <td>
+                                SafeDrive Academy provides professional driving lessons
+                                with experienced instructors and modern vehicles.
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+
+
+
+            <!-- Contact Person -->
+
+            <h5 class="mt-4 mb-3">
+                <i class="bi bi-person-badge text-primary"></i>
+                Primary Contact
+            </h5>
+
+
+            <table class="table">
+
+                <tbody>
+
+                    <tr>
+                        <td width="25%">Full Name</td>
+                        <td>John Anderson</td>
+                    </tr>
+
+                    <tr>
+                        <td>Phone</td>
+                        <td>0719876543</td>
+                    </tr>
+
+                    <tr>
+                        <td>Email</td>
+                        <td>john@safedrive.com</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+
+
+            <!-- Location -->
+
+            <h5 class="mt-4 mb-3">
+                <i class="bi bi-geo-alt text-primary"></i>
+                School Location
+            </h5>
+
+
+            <table class="table">
+
+                <tbody>
+
+                    <tr>
+                        <td width="25%">Address</td>
+                        <td>123 Main Street</td>
+                    </tr>
+
+                    <tr>
+                        <td>City</td>
+                        <td>Colombo</td>
+                    </tr>
+
+                    <tr>
+                        <td>Province</td>
+                        <td>Western Province</td>
+                    </tr>
+
+                    <tr>
+                        <td>Postal Code</td>
+                        <td>00100</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+
+
+            <!-- Operations -->
+
+            <h5 class="mt-4 mb-3">
+                <i class="bi bi-journal-bookmark text-primary"></i>
+                Course Information
+            </h5>
+
+
+            <table class="table">
+
+                <tbody>
+
+                    <tr>
+                        <td width="25%">Courses & Packages</td>
+                        <td>
+
+                            <div class="mb-2">
+                                <strong>Beginner Driving Package</strong>
+                                <br>
+                                <small class="text-muted">
+                                    Includes 20 practical lessons + theory classes
+                                </small>
+                                <br>
+                                Total Sessions: 20 | Price: Rs. 50,000
+                            </div>
+
+
+                            <div class="mb-2">
+                                <strong>License Preparation Package</strong>
+                                <br>
+                                <small class="text-muted">
+                                    Complete training with test preparation
+                                </small>
+                                <br>
+                                Total Sessions: 30 | Price: Rs. 75,000
+                            </div>
+
+
+                            <div>
+                                <strong>Automatic Driving Course</strong>
+                                <br>
+                                <small class="text-muted">
+                                    Automatic vehicle training
+                                </small>
+                                <br>
+                                Total Sessions: 15 | Price: Rs. 40,000
+                            </div>
+
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>Transmission</td>
+                        <td>
+                            Automatic & Manual
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>Operating Hours</td>
+                        <td>
+                            Weekdays & Weekends
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+            </tbody>
+
+            </table>
+
+
+
+
+            <!-- Verification -->
+
+            <h5 class="mt-4 mb-3">
+                <i class="bi bi-file-earmark-check text-primary"></i>
+                Licensing & Verification
+            </h5>
+            <table class="table">
+
+                <tbody>
+
+                    <tr>
+                        <td width="25%">Insurance Provider</td>
+                        <td>ABC Insurance Co.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Insurance Policy</td>
+                        <td>POL-123456789</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h5 class="mt-4 mb-3">
+                <i class="bi bi-shield-lock text-primary"></i>
+                Account Setup
+            </h5>
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td width="25%">Password</td>
+                        <td>
+                            <span>••••••••</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+</div>
+<div class="position-fixed top-0 end-0 p-3" style="z-index:9999">
+
+    <div id="successToast" class="toast text-bg-success border-0">
+
+        <div class="d-flex">
+
+            <div class="toast-body" id="successToastMessage">
+
+            </div>
+
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast">
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
