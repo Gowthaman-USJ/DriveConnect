@@ -33,7 +33,7 @@ CREATE TABLE `courses` (
   PRIMARY KEY (`CourseID`),
   KEY `DsID` (`DsID`),
   CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`DsID`) REFERENCES `drivingschool` (`DsID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `courses` (
 
 LOCK TABLES `courses` WRITE;
 /*!40000 ALTER TABLE `courses` DISABLE KEYS */;
-INSERT INTO `courses` VALUES (1,1,'Course','Beginner Driving Course','Basic vehicle control and road training',20,50000),(2,1,'Package','Full License Package','Complete training and test preparation',30,75000),(3,2,'Course','Automatic Driving Course','Automatic vehicle training',20,55000),(4,2,'Package','Premium License Package','Full license preparation package',35,90000);
+INSERT INTO `courses` VALUES (1,1,'Course','Beginner Driving Course','Basic vehicle control and road training',20,50000),(2,1,'Package','Full License Package','Complete training and test preparation',30,75000),(3,2,'Course','Automatic Driving Course','Automatic vehicle training',20,55000),(4,2,'Package','Premium License Package','Full license preparation package',35,90000),(5,9,'Course','Gowthaman Navarathnarajah',NULL,0,0),(6,9,'Package','Gowthaman Navarathwwwnarajah',NULL,0,0),(7,10,'Course','Gowthaman Navarathnarajah',NULL,0,0),(8,10,'Package','Gowthaman Nava22rathnarajah',NULL,0,0),(9,11,'Course','Gowthaman Navarathnarajah',NULL,0,0),(10,11,'Course','Gowthaman Navarathnarajah',NULL,0,0),(11,12,'Course','Gowthaman Navarathnarajah','rerergergerrehe',4,10000),(12,12,'Package','Gowthaman Navarathnarajah','fhoiefhoiewhf',100,50000);
 /*!40000 ALTER TABLE `courses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,10 +59,10 @@ CREATE TABLE `drivingschool` (
   `SchoolName` varchar(50) NOT NULL,
   `DS_LicenseNo` varchar(25) NOT NULL,
   `Established_Year` int NOT NULL,
-  `PhoneNo` varchar(15) NOT NULL,
+  `PhoneNo` varchar(50) DEFAULT NULL,
   `Description` tinytext,
   `ManagerName` varchar(50) NOT NULL,
-  `DirectPhone` varchar(15) NOT NULL,
+  `DirectPhone` varchar(50) DEFAULT NULL,
   `S_Address` varchar(255) NOT NULL,
   `City` varchar(50) NOT NULL,
   `State` varchar(50) NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE `drivingschool` (
   UNIQUE KEY `InsuranceNo` (`InsuranceNo`),
   KEY `LoginID` (`LoginID`),
   CONSTRAINT `drivingschool_ibfk_1` FOREIGN KEY (`LoginID`) REFERENCES `login` (`LoginID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,7 +86,7 @@ CREATE TABLE `drivingschool` (
 
 LOCK TABLES `drivingschool` WRITE;
 /*!40000 ALTER TABLE `drivingschool` DISABLE KEYS */;
-INSERT INTO `drivingschool` VALUES (1,19,'SafeDrive Driving Academy','DSL-458921',2015,'0774567890','Professional driving lessons for beginners and advanced learners','Nimal Perera','0712345678','125 Main Street','Colombo','Western Province',100,'Both','Both','Ceylinco Insurance PLC','POL-2025-785412'),(2,1,'Colombo Drive Academy','DSL-10001',2018,'0711111111','Professional driving training school','Ruwan Perera','0712222222','25 Main Street','Colombo','Western',100,'Both','Both','Ceylinco Insurance','INS-10001'),(3,2,'City Drive School','DSL-10002',2020,'0723333333','Modern driving lessons with experienced instructors','Chamara Silva','0724444444','50 Lake Road','Kandy','Central',20000,'Both','Flex','Allianz Insurance','INS-10002');
+INSERT INTO `drivingschool` VALUES (1,19,'SafeDrive Driving Academy','DSL-458921',2015,'0774567890','Professional driving lessons for beginners and advanced learners','Nimal Perera','0712345678','125 Main Street','Colombo','Western Province',100,'Both','Both','Ceylinco Insurance PLC','POL-2025-785412'),(2,1,'Colombo Drive Academy','DSL-10001',2018,'0711111111','Professional driving training school','Ruwan Perera','0712222222','25 Main Street','Colombo','Western',100,'Both','Both','Ceylinco Insurance','INS-10001'),(3,2,'City Drive School','DSL-10002',2020,'0723333333','Modern driving lessons with experienced instructors','Chamara Silva','0724444444','50 Lake Road','Kandy','Central',20000,'Both','Flex','Allianz Insurance','INS-10002'),(7,36,'SafedwtrfdedDrive Driving Academy','DSL-458956212222',1902,'DSL-458956212222','fewfewfeefw','Gowthaman Navarathnarajah','+94760403533','16 Vanderwart Place,Dehiwala,undefined','Dehiwala','efee',10350,'Manual','Weekday','Ceylinco Insurance PLC','POL-2025-78541662'),(8,37,'ewewwefwe','DSL-4332258921',1902,'DSL-4332258921','fewfewfewfew','Gowthaman Navarathnarajah','+94760403533','16 Vanderwart Place,Dehiwala,undefined','Dehiwala','fewfewf',10350,'Auto','Weekend','Ceylinco Insurance PLC','POL-2025-743285412'),(9,38,'ewewdwwefwe','DSL-4583422921',1901,'DSL-4583422921','gregergregrgrggerg','Gowthaman Navarathnarajah','+94760403533','16 Vanderwart Place,Dehiwala,undefined','Dehiwala','de',10350,'Auto','Weekday','Ceylinco Insurance PLC','POL-2025-782325412'),(10,40,'ewewdwwefwwwdwe','DSL-45834332452921',1901,'DSL-45834332452921','gregergregrgrggerg','Gowthaman Navarathnarajah','+94760403533','16 Vanderwart Place,Dehiwala,undefined','Dehiwala','de',10350,'Auto','Weekday','Ceylinco Insurance PLC','POL-2025-723182325412'),(11,41,'e','DSL-458',1901,'DSL-458','gregergregrgrggerg','Gowthaman Navarathnarajah','+94760403533','16 Vanderwart Place,Dehiwala,undefined','Dehiwala','de',10350,'Auto','Weekday','Ceylinco Insurance PLC','POL-2025'),(12,42,'e2','DSL-4582',1901,'DSL-4582','gregergregrgrggerg','Gowthaman Navarathnarajah','+94760403533','16 Vanderwart Place,Dehiwala,undefined','Dehiwala','de',10350,'Auto','Weekday','Ceylinco Insurance PLC','POL-20252');
 /*!40000 ALTER TABLE `drivingschool` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,7 +109,7 @@ CREATE TABLE `instructor` (
   `Address` varchar(255) NOT NULL,
   `Drive_Exp` int NOT NULL,
   `Availability` enum('FullTime','PartTime','Weekend') NOT NULL,
-  `Status` enum('Available','In Lesson') NOT NULL,
+  `Status` enum('Available','InLesson') DEFAULT NULL,
   PRIMARY KEY (`InsID`),
   UNIQUE KEY `NIC` (`NIC`),
   KEY `DsID` (`DsID`),
@@ -137,13 +137,12 @@ DROP TABLE IF EXISTS `licensetype`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `licensetype` (
-  `StuID` int DEFAULT NULL,
-  `InsID` int DEFAULT NULL,
-  `License_Type` varchar(20) DEFAULT NULL,
-  KEY `StuID` (`StuID`),
-  KEY `InsID` (`InsID`),
-  CONSTRAINT `licensetype_ibfk_1` FOREIGN KEY (`StuID`) REFERENCES `user` (`UserID`),
-  CONSTRAINT `licensetype_ibfk_2` FOREIGN KEY (`InsID`) REFERENCES `instructor` (`InsID`)
+  `LicenseID` int NOT NULL,
+  `LoginID` int DEFAULT NULL,
+  `License_Type` enum('Motorcycle','Light Vehicle','Heavy Vehicle') DEFAULT NULL,
+  PRIMARY KEY (`LicenseID`),
+  KEY `LoginID` (`LoginID`),
+  CONSTRAINT `licensetype_ibfk_1` FOREIGN KEY (`LoginID`) REFERENCES `login` (`LoginID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -153,7 +152,7 @@ CREATE TABLE `licensetype` (
 
 LOCK TABLES `licensetype` WRITE;
 /*!40000 ALTER TABLE `licensetype` DISABLE KEYS */;
-INSERT INTO `licensetype` VALUES (11,NULL,'Car'),(12,NULL,'Motorcycle'),(13,NULL,'Heavy'),(NULL,1,'Car'),(NULL,2,'Motorcycle'),(NULL,3,'Heavy');
+INSERT INTO `licensetype` VALUES (1,27,'Motorcycle'),(2,27,'Heavy Vehicle');
 /*!40000 ALTER TABLE `licensetype` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,12 +165,12 @@ DROP TABLE IF EXISTS `login`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `login` (
   `LoginID` int NOT NULL AUTO_INCREMENT,
-  `Email` varchar(100) NOT NULL,
-  `Password` varchar(20) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `UserRole` enum('Admin','DrivingSchool','Student','Instructor') DEFAULT NULL,
   PRIMARY KEY (`LoginID`),
-  UNIQUE KEY `Email` (`Email`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `Email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -180,7 +179,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (1,'colombodrive@gmail.com','Drive@123','DrivingSchool'),(2,'citydrive@gmail.com','Drive@456','DrivingSchool'),(3,'kasun@gmail.com','Kasun@123','Instructor'),(4,'nimal@gmail.com','Nimal@123','Instructor'),(5,'sahan@gmail.com','Sahan@123','Instructor'),(6,'amal@gmail.com','Amal@123','Instructor'),(7,'tharindu@gmail.com','Tharindu@123','Instructor'),(8,'roshan@gmail.com','Roshan@123','Instructor'),(9,'john@gmail.com','John@123','Student'),(10,'kamal@gmail.com','Kamal@123','Student'),(11,'saman@gmail.com','Saman@123','Student'),(12,'dilshan@gmail.com','Dilshan@123','Student'),(13,'nuwan@gmail.com','Nuwan@123','Student'),(14,'arun@gmail.com','Arun@123','Student'),(15,'praveen@gmail.com','Praveen@123','Student'),(16,'mohan@gmail.com','Mohan@123','Student'),(17,'ravi@gmail.com','Ravi@123','Student'),(18,'vimal@gmail.com','Vimal@123','Student'),(19,'safedrive@gmail.com','SafeDrive@123','DrivingSchool');
+INSERT INTO `login` VALUES (1,'colombodrive@gmail.com','Drive@123','DrivingSchool'),(2,'citydrive@gmail.com','Drive@456','DrivingSchool'),(3,'kasun@gmail.com','Kasun@123','Instructor'),(4,'nimal@gmail.com','Nimal@123','Instructor'),(5,'sahan@gmail.com','Sahan@123','Instructor'),(6,'amal@gmail.com','Amal@123','Instructor'),(7,'tharindu@gmail.com','Tharindu@123','Instructor'),(8,'roshan@gmail.com','Roshan@123','Instructor'),(9,'john@gmail.com','John@123','Student'),(10,'kamal@gmail.com','Kamal@123','Student'),(11,'saman@gmail.com','Saman@123','Student'),(12,'dilshan@gmail.com','Dilshan@123','Student'),(13,'nuwan@gmail.com','Nuwan@123','Student'),(14,'arun@gmail.com','Arun@123','Student'),(15,'praveen@gmail.com','Praveen@123','Student'),(16,'mohan@gmail.com','Mohan@123','Student'),(17,'ravi@gmail.com','Ravi@123','Student'),(18,'vimal@gmail.com','Vimal@123','Student'),(19,'safedrive@gmail.com','SafeDrive@123','DrivingSchool'),(20,'iqgowthaman@gmail.com','gdueguduegd','Student'),(22,'iqgowthassman@gmail.com','efwefewfef','Student'),(23,'iqgowthamddan@gmail.com','fefewfwefew','Student'),(25,'iqgowthamddwwwan@gmail.com','fefewfwefew','Student'),(26,'iqgowtwwhamddwwwan@gmail.com','fefewfwefew','Student'),(27,'iqgoedeewthdaman@gmail.com','wdwdwdwwd','Student'),(29,'iqgowthafefeefeeman@gmail.com','fewfewfewf','DrivingSchool'),(31,'iqgcdeowthafefeefeeman@gmail.com','fewfewfewf','DrivingSchool'),(32,'iqgcdeowthafefeefeemcsan@gmail.com','fewfewfewf','DrivingSchool'),(33,'iqgtrgcdeowthafefeefeemcsan@gmail.com','fewfewfewf','DrivingSchool'),(35,'eeeiqgtrgcdeowthafefeefeemcsan@gmail.com','fewfewfewf','DrivingSchool'),(36,'prawes@gmail.com','fewfewfewf','DrivingSchool'),(37,'wtehsnnen@gmail.com','ferfrfr445g5','DrivingSchool'),(38,'teysajhb@gmail.com','vergergregrehre','DrivingSchool'),(40,'teyseybsajhb@gmail.com','eewfewfewfe','DrivingSchool'),(41,'teyb@gmail.com','','DrivingSchool'),(42,'te2yb@gmail.com','edededed','DrivingSchool');
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,6 +228,8 @@ CREATE TABLE `schedule` (
   `InsID` int NOT NULL,
   `Lesson_Date` date NOT NULL,
   `Lesson_Time` time NOT NULL,
+  `Status` enum('Completed','InProgress','Scheduled') DEFAULT NULL,
+  `Attendance` enum('Present','Absent','Pending') DEFAULT 'Pending',
   PRIMARY KEY (`LessonID`),
   KEY `InsID` (`InsID`),
   KEY `StuID` (`StuID`),
@@ -243,7 +244,7 @@ CREATE TABLE `schedule` (
 
 LOCK TABLES `schedule` WRITE;
 /*!40000 ALTER TABLE `schedule` DISABLE KEYS */;
-INSERT INTO `schedule` VALUES (1,11,1,'2026-07-15','08:00:00'),(2,12,2,'2026-07-15','10:00:00'),(3,13,3,'2026-07-16','09:30:00'),(4,14,4,'2026-07-16','14:00:00'),(5,15,5,'2026-07-17','11:00:00'),(6,16,6,'2026-07-17','15:30:00'),(7,17,1,'2026-07-18','08:30:00'),(8,18,2,'2026-07-18','13:00:00');
+INSERT INTO `schedule` VALUES (1,11,1,'2026-07-15','08:00:00','Completed','Present'),(2,12,2,'2026-07-15','10:00:00','Completed','Present'),(3,13,3,'2026-07-16','09:30:00','Completed','Pending'),(4,14,4,'2026-07-16','14:00:00','InProgress','Absent'),(5,15,5,'2026-07-17','11:00:00','Scheduled','Pending'),(6,16,6,'2026-07-17','15:30:00','Scheduled','Pending'),(7,17,1,'2026-07-18','08:30:00','Scheduled','Pending'),(8,18,2,'2026-07-18','13:00:00','Scheduled','Pending');
 /*!40000 ALTER TABLE `schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -262,7 +263,7 @@ CREATE TABLE `student` (
   `InsID` int DEFAULT NULL,
   `FeeStatus` enum('Paid','Pending') DEFAULT NULL,
   `Attendance` int NOT NULL,
-  `Status` enum('Training','Test Ready','Completed','On Hold') DEFAULT NULL,
+  `Status` enum('Training','TestReady','Completed','OnHold') DEFAULT NULL,
   PRIMARY KEY (`StuID`),
   KEY `DsID` (`DsID`),
   KEY `InsID` (`InsID`),
@@ -281,7 +282,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (11,11,1,1,1,'Paid',5,'Training'),(12,12,1,1,2,'Pending',3,'Training'),(13,13,1,2,3,'Paid',10,'Test Ready'),(14,14,1,2,1,'Paid',20,'Completed'),(15,15,1,1,2,'Pending',2,'On Hold'),(16,16,2,3,4,'Paid',6,'Training'),(17,17,2,3,5,'Pending',4,'Training'),(18,18,2,4,6,'Paid',15,'Test Ready'),(19,19,2,4,4,'Paid',25,'Completed'),(20,20,2,3,5,'Pending',1,'On Hold');
+INSERT INTO `student` VALUES (11,11,1,1,1,'Paid',5,'Training'),(12,12,1,1,2,'Pending',3,'Training'),(13,13,1,2,3,'Paid',10,'TestReady'),(14,14,1,2,1,'Paid',20,'Completed'),(16,16,2,3,4,'Paid',6,'TestReady'),(17,17,2,3,5,'Pending',4,'Training'),(18,18,2,4,6,'Paid',15,'TestReady'),(19,19,2,4,4,'Paid',25,'Training');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -313,7 +314,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `NIC` (`NIC`),
   KEY `LoginID` (`LoginID`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`LoginID`) REFERENCES `login` (`LoginID`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -322,7 +323,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (11,9,'John','Silva','200112345678','0711111111','2001-01-10','Male','Colombo','Colombo','Western',10000,'Automatic','C_Beginner','Evening',''),(12,10,'Kamal','Perera','200212345678','0712222222','2002-02-15','Male','Colombo','Colombo','Western',10000,'Manual','C_Beginner','Mrng',''),(13,11,'Saman','Fernando','200312345678','0713333333','2003-03-20','Male','Colombo','Colombo','Western',10000,'Automatic','Intermediate','Weekends',''),(14,12,'Dilshan','Silva','200412345678','0714444444','2004-04-25','Male','Colombo','Colombo','Western',10000,'Manual','C_Beginner','Evening',''),(15,13,'Nuwan','Perera','200512345678','0715555555','2005-05-30','Male','Colombo','Colombo','Western',10000,'Automatic','C_Beginner','Weekends',''),(16,14,'Arun','Kumar','200612345678','0721111111','2006-06-10','Male','Kandy','Kandy','Central',20000,'Automatic','C_Beginner','Evening',''),(17,15,'Praveen','Raj','200712345678','0722222222','2007-07-15','Male','Kandy','Kandy','Central',20000,'Manual','C_Beginner','Mrng',''),(18,16,'Mohan','Silva','200812345678','0723333333','2008-08-20','Male','Kandy','Kandy','Central',20000,'Automatic','Intermediate','Weekends',''),(19,17,'Ravi','Perera','200912345678','0724444444','2009-09-25','Male','Kandy','Kandy','Central',20000,'Manual','C_Beginner','Evening',''),(20,18,'Vimal','Fernando','201012345678','0725555555','2010-10-30','Male','Kandy','Kandy','Central',20000,'Automatic','C_Beginner','Weekends','');
+INSERT INTO `user` VALUES (11,9,'John','Silva','200112345678','0711111111','2001-01-10','Male','Colombo','Colombo','Western',10000,'Automatic','C_Beginner','Evening',''),(12,10,'Kamal','Perera','200212345678','0712222222','2002-02-15','Male','Colombo','Colombo','Western',10000,'Manual','C_Beginner','Mrng',''),(13,11,'Saman','Fernando','200312345678','0713333333','2003-03-20','Male','Colombo','Colombo','Western',10000,'Automatic','Intermediate','Weekends',''),(14,12,'Dilshan','Silva','200412345678','0714444444','2004-04-25','Male','Colombo','Colombo','Western',10000,'Manual','C_Beginner','Evening',''),(15,13,'Nuwan','Perera','200512345678','0715555555','2005-05-30','Male','Colombo','Colombo','Western',10000,'Automatic','C_Beginner','Weekends',''),(16,14,'Arun','Kumar','200612345678','0721111111','2006-06-10','Male','Kandy','Kandy','Central',20000,'Automatic','C_Beginner','Evening',''),(17,15,'Praveen','Raj','200712345678','0722222222','2007-07-15','Male','Kandy','Kandy','Central',20000,'Manual','C_Beginner','Mrng',''),(18,16,'Mohan','Silva','200812345678','0723333333','2008-08-20','Male','Kandy','Kandy','Central',20000,'Automatic','Intermediate','Weekends',''),(19,17,'Ravi','Perera','200912345678','0724444444','2009-09-25','Male','Kandy','Kandy','Central',20000,'Manual','C_Beginner','Evening',''),(20,18,'Vimal','Fernando','201012345678','0725555555','2010-10-30','Male','Kandy','Kandy','Central',20000,'Automatic','C_Beginner','Weekends',''),(21,26,'Gowthaman','Navarathnarajah','2004162100340','+94760403533','2026-07-01','male','16 Vanderwart Place,Dehiwala,undefined','Dehiwala','efee',10350,'Automatic','Intermediate','Evening','adewdew'),(22,27,'Gowthaman','Navarathnarajah','200416100340','+94760403533','2026-07-21','female','16 Vanderwart Place,Dehiwala,undefined','Dehiwala','efee',10350,'Manual','Intermediate','Afternoon','adwedwe');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -374,4 +375,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-07-11 16:03:52
+-- Dump completed on 2026-07-17  6:05:59
