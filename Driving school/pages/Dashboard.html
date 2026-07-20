@@ -1,0 +1,456 @@
+<div id="sidebar"></div>
+<div id="sidebarOverlay"></div>
+
+<header class="topbar">
+
+    <button class="mob-menu-btn topbar-icon-btn d-lg-none"
+        onclick="document.getElementById('sidebar').classList.toggle('open')">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <div class="topbar-icon-btn">
+        <i class="bi bi-grid-1x2"></i>
+    </div>
+    <div>
+        <div class="topbar-title" id="topbarTitle">Dashboard</div>
+    </div>
+    <div class="topbar-actions">
+
+        <div class="instr-avatar" style="width:36px;height:36px;font-size:0.85rem;cursor:pointer;" title="Profile">
+            KP</div>
+    </div>
+</header>
+
+<div class="page-body">
+
+    <main class="dashboard-content">
+
+        <div class="welcome-banner">
+            <h2>Good morning, Kamal! 👋</h2>
+            <p>You have <strong>8 lessons</strong> scheduled today and <strong>3 new student
+                    inquiries</strong>
+                waiting for review.</p>
+        </div>
+    </main>
+
+    <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="stat-icon blue"><i class="bi bi-people-fill"></i></div>
+                    <span class="stat-change up"><i class="bi bi-arrow-up"></i> 12%</span>
+                </div>
+                <div class="stat-value">48</div>
+                <div class="stat-label">Active Students</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="stat-icon green"><i class="bi bi-person-badge-fill"></i></div>
+                    <span class="stat-change up"><i class="bi bi-arrow-up"></i> 2</span>
+                </div>
+                <div class="stat-value">6</div>
+                <div class="stat-label">Instructors</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="stat-icon orange"><i class="bi bi-calendar-check"></i></div>
+                </div>
+                <div class="stat-value">8</div>
+                <div class="stat-label">Lessons Today</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="stat-icon purple"><i class="bi bi-currency-dollar"></i></div>
+                    <span class="stat-change up"><i class="bi bi-arrow-up"></i> 8%</span>
+                </div>
+                <div class="stat-value">$12,450</div>
+                <div class="stat-label">Revenue This Month</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-lg-8">
+            <div class="dash-card">
+                <div class="dash-card-header">
+                    <h5><i class="bi bi-calendar3 me-2 text-primary"></i>Today's Schedule</h5>
+                    <a href="#" onclick="loadPage('DisplaySchedule.html','schedule')"
+                        class="btn btn-sm btn-outline-primary">View Full Calendar</a>
+                </div>
+                <div class="dash-card-body no-padding">
+                    <div class="table-responsive">
+                        <table class="table table-dashboard">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Student</th>
+                                    <th>Instructor</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>9:00 AM</strong></td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="student-avatar" style="background:#0d6efd;">AM
+                                            </div>
+                                            <div>
+                                                <div class="fw-medium">Alex Morgan</div>
+                                                <small class="text-muted">Automatic</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Mark Stevens</td>
+                                    <td>Highway</td>
+                                    <td><span class="status-badge completed">Completed</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>10:30 AM</strong></td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="student-avatar" style="background:#198754;">SR
+                                            </div>
+                                            <div>
+                                                <div class="fw-medium">Sarah Reed</div>
+                                                <small class="text-muted">Manual</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Lisa Chen</td>
+                                    <td>Parking</td>
+                                    <td><span class="status-badge scheduled">In Progress</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>1:00 PM</strong></td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="student-avatar" style="background:#6f42c1;">JW
+                                            </div>
+                                            <div>
+                                                <div class="fw-medium">James Wilson</div>
+                                                <small class="text-muted">Automatic</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Mark Stevens</td>
+                                    <td>City Driving</td>
+                                    <td><span class="status-badge scheduled">Scheduled</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>2:30 PM</strong></td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="student-avatar" style="background:#fd7e14;">EP
+                                            </div>
+                                            <div>
+                                                <div class="fw-medium">Emily Parker</div>
+                                                <small class="text-muted">Automatic</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>David Kim</td>
+                                    <td>Test Prep</td>
+                                    <td><span class="status-badge scheduled">Scheduled</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>4:00 PM</strong></td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="student-avatar" style="background:#dc3545;">TB
+                                            </div>
+                                            <div>
+                                                <div class="fw-medium">Tom Bradley</div>
+                                                <small class="text-muted">Manual</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Lisa Chen</td>
+                                    <td>Beginner</td>
+                                    <td><span class="status-badge pending">Pending</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-4">
+            <div class="dash-card">
+                <div class="dash-card-header">
+                    <h5><i class="bi bi-person-badge me-2 text-primary"></i>Instructors</h5>
+                    <a href="#" onclick="loadPage('DisplayInstructors.html','instructors')"
+                        class="text-primary text-decoration-none small">Manage</a>
+                </div>
+                <div class="dash-card-body">
+                    <div class="instructor-item">
+                        <span class="instructor-status online"></span>
+                        <div class="flex-grow-1">
+                            <div class="fw-medium">Mark Stevens</div>
+                            <small class="text-muted">3 lessons today</small>
+                        </div>
+                        <span class="status-badge scheduled">Available</span>
+                    </div>
+                    <div class="instructor-item">
+                        <span class="instructor-status busy"></span>
+                        <div class="flex-grow-1">
+                            <div class="fw-medium">Lisa Chen</div>
+                            <small class="text-muted">In lesson until 11:30 AM</small>
+                        </div>
+                        <span class="status-badge pending">Busy</span>
+                    </div>
+                    <div class="instructor-item">
+                        <span class="instructor-status online"></span>
+                        <div class="flex-grow-1">
+                            <div class="fw-medium">David Kim</div>
+                            <small class="text-muted">2 lessons today</small>
+                        </div>
+                        <span class="status-badge scheduled">Available</span>
+                    </div>
+                    <div class="instructor-item">
+                        <span class="instructor-status offline"></span>
+                        <div class="flex-grow-1">
+                            <div class="fw-medium">Rachel Adams</div>
+                            <small class="text-muted">Day off</small>
+                        </div>
+                        <span class="status-badge cancelled">Offline</span>
+                    </div>
+                    <div class="instructor-item">
+                        <span class="instructor-status online"></span>
+                        <div class="flex-grow-1">
+                            <div class="fw-medium">Chris Lopez</div>
+                            <small class="text-muted">1 lesson today</small>
+                        </div>
+                        <span class="status-badge scheduled">Available</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3">
+
+
+        <div class="col-lg-5">
+            <div class="dash-card">
+                <div class="dash-card-header">
+                    <h5><i class="bi bi-person-plus me-2 text-primary"></i>Recent Students</h5>
+                    <a href="#" onclick="loadPage('DisplayStudents.html','students')"
+                        class="text-primary text-decoration-none small">View All</a>
+                </div>
+                <div class="dash-card-body no-padding">
+                    <div class="table-responsive">
+                        <table class="table table-dashboard">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Joined</th>
+                                    <th>Progress</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="student-avatar" style="background:#0d6efd;">NK
+                                            </div>
+                                            <div>
+                                                <div class="fw-medium">Nina Kumar</div>
+                                                <small class="text-muted">Beginner</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Today</td>
+                                    <td>
+                                        <div class="progress" style="height:6px;">
+                                            <div class="progress-bar bg-primary" style="width:10%">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="student-avatar" style="background:#198754;">RH
+                                            </div>
+                                            <div>
+                                                <div class="fw-medium">Ryan Hughes</div>
+                                                <small class="text-muted">Intermediate</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Yesterday</td>
+                                    <td>
+                                        <div class="progress" style="height:6px;">
+                                            <div class="progress-bar bg-primary" style="width:45%">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="student-avatar" style="background:#6f42c1;">MF
+                                            </div>
+                                            <div>
+                                                <div class="fw-medium">Mia Foster</div>
+                                                <small class="text-muted">Test Prep</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Jun 18</td>
+                                    <td>
+                                        <div class="progress" style="height:6px;">
+                                            <div class="progress-bar bg-success" style="width:85%">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="student-avatar" style="background:#fd7e14;">DL
+                                            </div>
+                                            <div>
+                                                <div class="fw-medium">Daniel Lee</div>
+                                                <small class="text-muted">Beginner</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Jun 17</td>
+                                    <td>
+                                        <div class="progress" style="height:6px;">
+                                            <div class="progress-bar bg-primary" style="width:25%">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="dash-card">
+                <div class="dash-card-header">
+                    <h5><i class="bi bi-lightning-fill me-2 text-primary"></i>Quick Actions</h5>
+                </div>
+                <div class="dash-card-body">
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <a href="#"  onclick="loadPage('AddStudent.html','students')" class="quick-action">
+                                <i class="bi bi-person-plus"></i>
+                                Add Student
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#" onclick="loadPage('BookLesson.html','schedules')" class="quick-action">
+                                <i class="bi bi-calendar-plus"></i>
+                                Book Lesson
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#" onclick="openAddInstructor()" class="quick-action">
+                                <i class="bi bi-person-badge"></i>
+                                Add Instructor
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#"  onclick="openAddVehicle()" class="quick-action">
+                                <i class="bi bi-car-front"></i>
+                                Add Vehicle
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#"  onclick="loadPage('AddPayment.html','payments')" class="quick-action">
+                                <i class="bi bi-receipt"></i>
+                                Record Payment
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="dash-card">
+                <div class="dash-card-header">
+                    <h5><i class="bi bi-inbox me-2 text-primary"></i>New Inquiries</h5>
+                    <span class="badge bg-primary">3</span>
+                </div>
+                <div class="dash-card-body">
+                    <div class="inquiry-item d-flex align-items-start gap-3 mb-3 pb-3 border-bottom">
+                        <div class="student-avatar" style="background:#0d6efd;">LC</div>
+                        <div class="flex-grow-1">
+                            <div class="fw-medium">Lucas Carter</div>
+                            <small class="text-muted">Wants beginner lessons — Automatic</small>
+                            <div class="mt-2">
+                                <button class="btn btn-sm btn-primary me-1"
+                                    onclick="handleInquiry(this, 'accept', 'Lucas Carter')">Accept</button>
+                                <button class="btn btn-sm btn-outline-secondary"
+                                    onclick="handleInquiry(this, 'decline', 'Lucas Carter')">Decline</button>
+                            </div>
+                        </div>
+                        <small class="text-muted">2h ago</small>
+                    </div>
+                    <div class="inquiry-item d-flex align-items-start gap-3 mb-3 pb-3 border-bottom">
+                        <div class="student-avatar" style="background:#198754;">OW</div>
+                        <div class="flex-grow-1">
+                            <div class="fw-medium">Olivia Wright</div>
+                            <small class="text-muted">Test prep package — Manual</small>
+                            <div class="mt-2">
+                                <button class="btn btn-sm btn-primary me-1"
+                                    onclick="handleInquiry(this, 'accept', 'Olivia Wright')">Accept</button>
+                                <button class="btn btn-sm btn-outline-secondary"
+                                    onclick="handleInquiry(this, 'decline', 'Olivia Wright')">Decline</button>
+                            </div>
+                        </div>
+                        <small class="text-muted">5h ago</small>
+                    </div>
+                    <div class="inquiry-item d-flex align-items-start gap-3 mb-3 pb-3 border-bottom">
+                        <div class="student-avatar" style="background:#6f42c1;">BN</div>
+                        <div class="flex-grow-1">
+                            <div class="fw-medium">Ben Nguyen</div>
+                            <small class="text-muted">Highway driving lessons — Automatic</small>
+                            <div class="mt-2">
+                                <button class="btn btn-sm btn-primary me-1">Accept</button>
+                                <button class="btn btn-sm btn-outline-secondary">Decline</button>
+                            </div>
+                        </div>
+                        <small class="text-muted">1d ago</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </main>
+</div>
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+
+    <div id="inquiryToast" class="toast text-bg-success border-0 compact-toast" role="alert">
+
+        <div class="d-flex">
+            <div class="toast-body py-2 px-3" id="toastMsg">
+                Action completed
+            </div>
+
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+
+    </div>
+
+</div>
