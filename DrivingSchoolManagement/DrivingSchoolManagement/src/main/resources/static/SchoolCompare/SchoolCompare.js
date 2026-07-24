@@ -4,14 +4,40 @@ let compareList = JSON.parse(localStorage.getItem("compareList")) || [];
 let savedList = JSON.parse(localStorage.getItem("savedList")) || [];
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadStudent();
+  loadUser();
   loadSchools();
 });
+
+async function loadUser() {
+  const userID = localStorage.getItem("userID");
+
+  try {
+    const response = await fetch(
+      `/api/compareschool/${userID}`
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to load user");
+    }
+    const user = await response.json();
+    document.getElementById(
+      "userName"
+    ).textContent = `${user.fName} ${user.lName}`;
+    document.getElementById("userAvatar").textContent =
+      user.fName.charAt(0).toUpperCase() + user.lName.charAt(0).toUpperCase();
+    document.getElementById("topuserAvatar").textContent =
+      user.fName.charAt(0).toUpperCase() + user.lName.charAt(0).toUpperCase();
+  } catch (error) {
+    console.error("Error loading user:", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadUser);
 
 async function loadSchools() {
   try {
     const response = await fetch(
-      "http://localhost:8080/api/compareschool/schools"
+      "/api/compareschool/schools"
     );
 
     if (!response.ok) {
@@ -233,7 +259,7 @@ Package: ${package.name}`
 
 async function loadCourses(dsID) {
   const response = await fetch(
-    `http://localhost:8080/api/compareschool/courses/${dsID}`
+    `/api/compareschool/courses/${dsID}`
   );
 
   const courses = await response.json();
@@ -279,13 +305,11 @@ let selectedPackage;
 
 function openPayment(id, index) {
   selectedSchool = schools.find((s) => s.id == id);
-
   selectedPackage = selectedSchool.packages[index];
 
   document.getElementById(
     "paymentPackage"
-  ).innerHTML = `${selectedSchool.name}<br>
-        ${selectedPackage.name}`;
+  ).innerHTML = `${selectedSchool.name}<br>${selectedPackage.name}`;
 
   document.getElementById("paymentAmount").innerHTML = selectedPackage.price;
 
@@ -296,75 +320,120 @@ function closePayment() {
   document.getElementById("paymentModal").classList.remove("show");
 }
 
-function makePayment() {
+async function makePayment() {
+  // Get selected payment method
   const method = document.getElementById("paymentMethod").value;
 
-  alert(
-    `Payment Successful!
-
-School: ${selectedSchool.name}
-Package: ${selectedPackage.name}
-Method: ${method}`
-  );
-
-  closePayment();
-}
-
-function makePayment() {
-  const method = document.getElementById("paymentMethod").value;
-
-  closePayment();
-
-  const toast = document.getElementById("paymentToast");
-  const title = toast.querySelector("strong");
-  const msg = toast.querySelector("p");
-  const okBtn = document.getElementById("toastOkBtn");
-
-  if (method === "Cash") {
-    title.innerHTML = "Enrollment Successful";
-    msg.innerHTML = "Please pay the amount at the driving school.";
-    okBtn.style.display = "inline-block";
-  } else {
-    title.innerHTML = "Payment Successful";
-    msg.innerHTML = "Your payment has been completed.";
-    okBtn.style.display = "none";
-
-    setTimeout(() => {
-      goStudentPortal();
-    }, 2000);
+  // Make sure package is selected
+  if (!selectedSchool || !selectedPackage) {
+    alert("Please select a package first.");
+    return;
   }
 
-  toast.classList.add("show");
+  // Get user ID
+  const userID = localStorage.getItem("userID");
+
+  if (!userID) {
+    alert("User ID not found. Please login again.");
+    return;
+  }
+
+  // Remove "LKR " and commas
+  // Example: "LKR 25,000" -> 25000
+  const amount = parseFloat(
+    selectedPackage.price.replace("LKR", "").replace(/,/g, "").trim()
+  );
+
+  const enrollmentData = {
+    userID: parseInt(userID),
+
+    dsID: parseInt(selectedSchool.id),
+
+    packageID: parseInt(selectedPackage.id),
+
+    amount: amount,
+
+    method: method,
+  };
+
+  console.log("Sending enrollment data:", enrollmentData);
+
+  try {
+    const response = await fetch(
+      "/api/compareschool/enroll",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify(enrollmentData),
+      }
+    );
+
+    const data = await response.json();
+
+    console.log("Backend response:", data);
+
+    if (!response.ok) {
+      throw new Error(data.message || "Enrollment failed");
+    }
+
+    if (data.success) {
+      // Remove temporary User ID
+      localStorage.removeItem("userID");
+
+      // Save newly created Student ID
+      localStorage.setItem("stuID", data.stuID);
+
+      // Close payment modal
+      closePayment();
+
+      // Show toast
+      const toast = document.getElementById("paymentToast");
+
+      const title = toast.querySelector("strong");
+
+      const msg = toast.querySelector("p");
+
+      const okBtn = document.getElementById("toastOkBtn");
+
+      if (method.toLowerCase() === "cash") {
+        title.innerHTML = "Enrollment Successful";
+
+        msg.innerHTML = "Please pay the amount at the driving school.";
+
+        okBtn.style.display = "inline-block";
+
+        // Cash -> User clicks OK
+        okBtn.onclick = goStudentPortal;
+      } else {
+        title.innerHTML = "Payment Successful";
+
+        msg.innerHTML = "Your payment has been completed.";
+
+        okBtn.style.display = "none";
+
+        // Card -> Automatically redirect
+        setTimeout(goStudentPortal, 2000);
+      }
+
+      toast.classList.add("show");
+    } else {
+      alert(data.message || "Enrollment failed");
+    }
+  } catch (error) {
+    console.error("Enrollment error:", error);
+
+    alert("Failed to complete enrollment: " + error.message);
+  }
 }
 
 function goStudentPortal() {
   document.getElementById("paymentToast").classList.remove("show");
-  window.location.href = "studentportal.html";
-}
-function filterCards() {
-  const searchElement = document.getElementById("searchQ");
-  const cityElement = document.getElementById("filterCity");
-  const txElement = document.getElementById("filterTx");
-  const search = searchElement ? searchElement.value.toLowerCase().trim() : "";
-  const city = cityElement ? cityElement.value.toLowerCase().trim() : "";
-  const transmission = txElement ? txElement.value : "";
 
-  const filteredSchools = schools.filter((s) => {
-    const schoolName = String(s.name || "").toLowerCase();
-    const address = String(s.address || "").toLowerCase();
-    const schoolCity = String(s.city || "").toLowerCase();
-
-    const searchMatch =
-      search === "" ||
-      schoolName.includes(search) ||
-      address.includes(search) ||
-      schoolCity.includes(search);
-
-    const cityMatch = city === "" || schoolCity === city;
-    const txMatch = transmission === "" || s.trans === transmission;
-    return searchMatch && cityMatch && txMatch;
-  });
-  renderCards(filteredSchools);
+  window.location.href = "../DrivingSchool/studentDashboard.html";
 }
 
 function populateCityFilter() {
@@ -389,10 +458,84 @@ function populateCityFilter() {
   });
 }
 
+function filterCards() {
+  const searchText = document
+    .getElementById("searchQ")
+    .value.toLowerCase()
+    .trim();
+
+  const selectedCity = document.getElementById("filterCity").value;
+
+  const selectedTransmission = document.getElementById("filterTx").value;
+
+  const filteredSchools = schools.filter((school) => {
+    // Search by school name or keyword
+    const matchesSearch =
+      !searchText ||
+      school.name.toLowerCase().includes(searchText) ||
+      (school.desc && school.desc.toLowerCase().includes(searchText)) ||
+      (school.city && school.city.toLowerCase().includes(searchText));
+
+    // Filter by city
+    const matchesCity = !selectedCity || school.city === selectedCity;
+
+    // Filter by transmission
+    const matchesTransmission =
+      !selectedTransmission ||
+      formatTransmission(school.trans) === selectedTransmission;
+
+    return matchesSearch && matchesCity && matchesTransmission;
+  });
+
+  renderCards(filteredSchools);
+}
+
 function resetFilters() {
   document.getElementById("searchQ").value = "";
   document.getElementById("filterCity").value = "";
   document.getElementById("filterTx").value = "";
-  document.getElementById("filterSort").value = "match";
   renderCards(schools);
+}
+
+async function enrollStudent(dsID, packageID, amount, paymentMethod) {
+  const userID = localStorage.getItem("userID");
+
+  if (!userID) {
+    alert("User ID not found. Please login again.");
+    return;
+  }
+
+  const enrollmentData = {
+    userID: parseInt(userID),
+    dsID: parseInt(dsID),
+    packageID: parseInt(packageID),
+    amount: parseFloat(amount),
+    paymentMethod: paymentMethod,
+  };
+
+  console.log("Sending enrollment:", enrollmentData);
+
+  const response = await fetch(
+    "/compareschool/enroll",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(enrollmentData),
+    }
+  );
+
+  const data = await response.json();
+
+  console.log("Backend response:", data);
+
+  if (data.success) {
+    localStorage.removeItem("userID");
+    localStorage.setItem("stuID", data.stuID);
+
+    alert("Enrollment successful!");
+
+    window.location.href = "../DrivingSchool/studentDashboard.html";
+  }
 }
