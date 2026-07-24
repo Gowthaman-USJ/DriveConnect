@@ -1,5 +1,4 @@
 const insID = localStorage.getItem("insID");
-console.log("Instructor ID:", insID);
 
 function loadPage(page, menu) {
   sessionStorage.setItem("page", page);
@@ -22,6 +21,7 @@ function loadPage(page, menu) {
         loadDashboardData();
         loadScheduledashboard();
         loadVehicle();
+        setGreeting();
       }
 
       if (page === "Students.html") {
@@ -55,10 +55,11 @@ async function loadInstructor() {
 
   const instructor = await response.json();
 
-  document.getElementById("instrName").innerHTML = instructor.name;
+  document.getElementById("instrName").innerHTML =
+    instructor.fName + " " + instructor.lName;
 
   document.getElementById("sidebarAvatar").innerHTML =
-    instructor.name.charAt(0);
+    instructor.fName.charAt(0) + instructor.lName.charAt(0);
 
   document.getElementById("instrid").innerHTML =
     "ID: INS-00" + instructor.insID;

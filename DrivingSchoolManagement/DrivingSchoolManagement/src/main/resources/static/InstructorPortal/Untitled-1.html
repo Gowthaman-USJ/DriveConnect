@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Instructor Portal — Learn2Drive</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+        <style>
+            :root {
+                --primary: #0d6efd;
+                --primary-dark: #0a58ca;
+                --primary-light: #e7f1ff;
+                --accent: #1e88e5;
+                --success: #198754;
+                --warning: #f59e0b;
+                --danger: #dc3545;
+                --sidebar-bg: #0a1628;
+                --sidebar-w: 240px;
+            }
+
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+                background: #f0f4f9;
+                color: #1a1a2e;
+                display: flex;
+                min-height: 100vh;
+            }
+
+            /* ══ SIDEBAR ══════════════════════════════════════════════ */
+            .sidebar {
+                width: var(--sidebar-w);
+                background: var(--sidebar-bg);
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                z-index: 100;
+                transition: transform 0.3s;
+            }
+
+            .sidebar-brand {
+                padding: 1.4rem 1.5rem 1.2rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            }
+
+            .sidebar-brand .brand-name {
+                font-weight: 800;
+                font-size: 1.2rem;
+                color: #fff;
+                letter-spacing: -0.4px;
+            }
+
+            .sidebar-brand .brand-name span {
+                color: #42a5f5;
+            }
+
+            .sidebar-brand .brand-role {
+                font-size: 0.72rem;
+                color: rgba(255, 255, 255, 0.4);
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                margin-top: 0.1rem;
+            }
+
+            .sidebar-instructor {
+                display: flex;
+                align-items: center;
+                gap: 0.85rem;
+                padding: 1.1rem 1.5rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            }
+
+            .instr-avatar {
+                width: 40px;
+                height: 40px;
+                background: linear-gradient(135deg, var(--primary), #42a5f5);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+                font-size: 1rem;
+                color: #fff;
+                flex-shrink: 0;
+            }
+
+            .instr-name {
+                font-size: 0.88rem;
+                font-weight: 600;
+                color: #fff;
+            }
+
+            .instr-id {
+                font-size: 0.72rem;
+                color: rgba(255, 255, 255, 0.4);
+            }
+
+            .sidebar-nav {
+                flex: 1;
+                padding: 0.75rem 0;
+                overflow-y: auto;
+            }
+
+            .nav-section-label {
+                font-size: 0.68rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: rgba(255, 255, 255, 0.3);
+                padding: 0.9rem 1.5rem 0.4rem;
+            }
+
+            .sidebar-link {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 0.65rem 1.5rem;
+                color: rgba(255, 255, 255, 0.6);
+                text-decoration: none;
+                font-size: 0.875rem;
+                font-weight: 500;
+                border-left: 3px solid transparent;
+                transition: color 0.15s, background 0.15s, border-color 0.15s;
+                cursor: pointer;
+            }
+
+            .sidebar-link i {
+                font-size: 1rem;
+                width: 18px;
+                text-align: center;
+            }
+
+            .sidebar-link:hover {
+                color: #fff;
+                background: rgba(255, 255, 255, 0.06);
+            }
+
+            .sidebar-link.active {
+                color: #fff;
+                background: rgba(13, 110, 253, 0.18);
+                border-left-color: var(--primary);
+            }
+
+            .sidebar-link .nav-badge {
+                margin-left: auto;
+                background: var(--primary);
+                color: #fff;
+                font-size: 0.65rem;
+                font-weight: 700;
+                padding: 0.15rem 0.5rem;
+                border-radius: 50px;
+            }
+
+            .sidebar-footer {
+                padding: 1rem 1.5rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.07);
+            }
+
+            .sidebar-footer a {
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+                color: rgba(255, 255, 255, 0.45);
+                font-size: 0.82rem;
+                text-decoration: none;
+                transition: color 0.15s;
+            }
+
+            .sidebar-footer a:hover {
+                color: #fff;
+            }
+
+            /* ══ MAIN CONTENT ══════════════════════════════════════════ */
+            .main-wrap {
+                margin-left: var(--sidebar-w);
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            /* Top bar */
+            .topbar {
+                background: #fff;
+                border-bottom: 1px solid #e9ecef;
+                padding: 0.85rem 1.75rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                position: sticky;
+                top: 0;
+                z-index: 50;
+            }
+
+            .topbar-title {
+                font-weight: 700;
+                font-size: 1.05rem;
+                color: #1a1a2e;
+            }
+
+            .topbar-date {
+                font-size: 0.82rem;
+                color: #6c757d;
+            }
+
+            .topbar-actions {
+                margin-left: auto;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+
+            .topbar-icon-btn {
+                width: 36px;
+                height: 36px;
+                background: #f8f9fb;
+                border: 1px solid #e9ecef;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #495057;
+                cursor: pointer;
+                position: relative;
+                transition: background 0.15s;
+            }
+
+            .topbar-icon-btn:hover {
+                background: var(--primary-light);
+                color: var(--primary);
+            }
+
+            .notif-dot {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                width: 8px;
+                height: 8px;
+                background: var(--danger);
+                border-radius: 50%;
+                border: 1.5px solid #fff;
+            }
+
+            /* Page body */
+            .page-body {
+                padding: 1.75rem;
+                flex: 1;
+            }
+
+            /* ══ STAT CARDS ════════════════════════════════════════════ */
+            .stat-card {
+                background: #fff;
+                border: 1px solid #e9ecef;
+                border-radius: 1rem;
+                padding: 1.25rem 1.4rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                height: 100%;
+            }
+
+            .stat-icon {
+                width: 52px;
+                height: 52px;
+                border-radius: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.4rem;
+                flex-shrink: 0;
+            }
+
+            .stat-icon.blue {
+                background: var(--primary-light);
+                color: var(--primary);
+            }
+
+            .stat-icon.green {
+                background: #d1fae5;
+                color: var(--success);
+            }
+
+            .stat-icon.orange {
+                background: #fef3c7;
+                color: var(--warning);
+            }
+
+            .stat-icon.red {
+                background: #fee2e2;
+                color: var(--danger);
+            }
+
+            .stat-label {
+                font-size: 0.78rem;
+                color: #6c757d;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+
+            .stat-value {
+                font-size: 1.75rem;
+                font-weight: 800;
+                color: #1a1a2e;
+                line-height: 1.1;
+            }
+
+            .stat-sub {
+                font-size: 0.78rem;
+                color: #6c757d;
+                margin-top: 0.15rem;
+            }
+
+            /* ══ SECTION HEADER ═══════════════════════════════════════ */
+            .section-hd {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 1rem;
+            }
+
+            .section-hd h6 {
+                font-weight: 700;
+                font-size: 0.95rem;
+                color: #1a1a2e;
+                margin: 0;
+            }
+
+            .section-hd a,
+            .section-hd button {
+                font-size: 0.8rem;
+                color: var(--primary);
+                font-weight: 600;
+                text-decoration: none;
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 0;
+            }
+
+            /* ══ TODAY'S LESSON TIMELINE ══════════════════════════════ */
+            .lesson-timeline {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .lesson-block {
+                display: flex;
+                gap: 0;
+                position: relative;
+            }
+
+            .timeline-time {
+                width: 70px;
+                flex-shrink: 0;
+                text-align: right;
+                padding-right: 1rem;
+                padding-top: 0.1rem;
+            }
+
+            .timeline-time .t-hour {
+                font-size: 0.8rem;
+                font-weight: 700;
+                color: #1a1a2e;
+            }
+
+            .timeline-time .t-ampm {
+                font-size: 0.68rem;
+                color: #adb5bd;
+            }
+
+            .timeline-rail {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 24px;
+                flex-shrink: 0;
+            }
+
+            .rail-dot {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                border: 2.5px solid var(--primary);
+                background: #fff;
+                flex-shrink: 0;
+                margin-top: 0.2rem;
+            }
+
+            .rail-dot.done {
+                background: var(--success);
+                border-color: var(--success);
+            }
+
+            .rail-dot.now {
+                background: var(--primary);
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
+            }
+
+            .rail-dot.skip {
+                background: #e9ecef;
+                border-color: #e9ecef;
+            }
+
+            .rail-line {
+                width: 2px;
+                flex: 1;
+                background: #e9ecef;
+                min-height: 24px;
+            }
+
+            .rail-line.done {
+                background: var(--success);
+            }
+
+            .lesson-card {
+                flex: 1;
+                background: #fff;
+                border: 1px solid #e9ecef;
+                border-radius: 0.85rem;
+                padding: 0.9rem 1.1rem;
+                margin-bottom: 0.75rem;
+                transition: box-shadow 0.15s, border-color 0.15s;
+                cursor: pointer;
+            }
+
+            .lesson-card:hover {
+                box-shadow: 0 4px 20px rgba(13, 110, 253, 0.1);
+                border-color: #c9d8f5;
+            }
+
+            .lesson-card.active-now {
+                border-color: var(--primary);
+                background: var(--primary-light);
+            }
+
+            .lesson-card.completed {
+                opacity: 0.72;
+            }
+
+            .lc-top {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .lc-avatar {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+                font-size: 0.85rem;
+                color: #fff;
+                flex-shrink: 0;
+            }
+
+            .lc-name {
+                font-weight: 700;
+                font-size: 0.9rem;
+            }
+
+            .lc-lesson {
+                font-size: 0.75rem;
+                color: #6c757d;
+            }
+
+            .lc-status {
+                margin-left: auto;
+                font-size: 0.7rem;
+                font-weight: 700;
+                padding: 0.25rem 0.65rem;
+                border-radius: 50px;
+            }
+
+            .lc-status.done {
+                background: #d1fae5;
+                color: var(--success);
+            }
+
+            .lc-status.upcoming {
+                background: var(--primary-light);
+                color: var(--primary);
+            }
+
+            .lc-status.now {
+                background: var(--primary);
+                color: #fff;
+            }
+
+            .lc-status.absent {
+                background: #fee2e2;
+                color: var(--danger);
+            }
+
+            .lc-meta {
+                display: flex;
+                gap: 1.25rem;
+                flex-wrap: wrap;
+            }
+
+            .lc-meta-item {
+                display: flex;
+                align-items: center;
+                gap: 0.35rem;
+                font-size: 0.78rem;
+                color: #6c757d;
+            }
+
+            .lc-meta-item i {
+                color: var(--primary);
+                font-size: 0.8rem;
+            }
+
+            .lc-actions {
+                display: flex;
+                gap: 0.5rem;
+                margin-top: 0.65rem;
+            }
+
+            /* ══ ATTENDANCE BUTTONS ══════════════════════════════════= */
+            .att-btn {
+                border: 1.5px solid #e0e7ef;
+                border-radius: 50px;
+                background: #fff;
+                font-size: 0.75rem;
+                font-weight: 600;
+                padding: 0.3rem 0.85rem;
+                cursor: pointer;
+                transition: all 0.15s;
+            }
+
+            .att-btn:hover {
+                border-color: #adb5bd;
+            }
+
+            .att-btn.present {
+                background: #d1fae5;
+                border-color: var(--success);
+                color: var(--success);
+            }
+
+            .att-btn.absent {
+                background: #fee2e2;
+                border-color: var(--danger);
+                color: var(--danger);
+            }
+
+            .att-btn.note-btn {
+                color: #6c757d;
+            }
+
+            .att-btn.note-btn:hover {
+                border-color: var(--primary);
+                color: var(--primary);
+            }
+
+            /* ══ STUDENT ROSTER TABLE ══════════════════════════════════ */
+            .roster-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .roster-table th {
+                font-size: 0.72rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: #6c757d;
+                padding: 0.6rem 0.9rem;
+                border-bottom: 1.5px solid #e9ecef;
+                text-align: left;
+                white-space: nowrap;
+            }
+
+            .roster-table td {
+                padding: 0.75rem 0.9rem;
+                border-bottom: 1px solid #f3f4f6;
+                font-size: 0.875rem;
+                vertical-align: middle;
+            }
+
+            .roster-table tr:last-child td {
+                border-bottom: none;
+            }
+
+            .roster-table tr:hover td {
+                background: #f8f9fb;
+            }
+
+            .student-cell {
+                display: flex;
+                align-items: center;
+                gap: 0.65rem;
+            }
+
+            .s-avatar {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+                font-size: 0.78rem;
+                color: #fff;
+                flex-shrink: 0;
+            }
+
+            .s-name {
+                font-weight: 600;
+                font-size: 0.875rem;
+            }
+
+            .s-phone {
+                font-size: 0.75rem;
+                color: #6c757d;
+            }
+
+            .progress-bar-custom {
+                height: 6px;
+                background: #e9ecef;
+                border-radius: 50px;
+                overflow: hidden;
+                width: 80px;
+            }
+
+            .progress-bar-fill {
+                height: 100%;
+                background: var(--primary);
+                border-radius: 50px;
+            }
+
+            .progress-label {
+                font-size: 0.75rem;
+                color: #495057;
+                font-weight: 600;
+                margin-left: 0.4rem;
+            }
+
+            .att-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3rem;
+                font-size: 0.72rem;
+                font-weight: 700;
+                padding: 0.2rem 0.6rem;
+                border-radius: 50px;
+            }
+
+            .att-pill.present-pill {
+                background: #d1fae5;
+                color: var(--success);
+            }
+
+            .att-pill.absent-pill {
+                background: #fee2e2;
+                color: var(--danger);
+            }
+
+            /* ══ PANEL CARD ════════════════════════════════════════════ */
+            .panel {
+                background: #fff;
+                border: 1px solid #e9ecef;
+                border-radius: 1rem;
+                overflow: hidden;
+            }
+
+            .panel-header {
+                padding: 1rem 1.25rem;
+                border-bottom: 1px solid #f3f4f6;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .panel-header h6 {
+                font-weight: 700;
+                font-size: 0.9rem;
+                margin: 0;
+            }
+
+            .panel-body {
+                padding: 1.25rem;
+            }
+
+            /* ══ SKILL ASSESSMENT ══════════════════════════════════════ */
+            .skill-row {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                margin-bottom: 0.85rem;
+            }
+
+            .skill-label {
+                font-size: 0.82rem;
+                color: #495057;
+                width: 130px;
+                flex-shrink: 0;
+            }
+
+            .skill-bar {
+                flex: 1;
+                height: 8px;
+                background: #e9ecef;
+                border-radius: 50px;
+                overflow: hidden;
+            }
+
+            .skill-fill {
+                height: 100%;
+                border-radius: 50px;
+                transition: width 0.6s ease;
+            }
+
+            .skill-score {
+                font-size: 0.78rem;
+                font-weight: 700;
+                color: #1a1a2e;
+                width: 28px;
+                text-align: right;
+            }
+
+            /* ══ NOTE MODAL ════════════════════════════════════════════ */
+            .modal-note .modal-content {
+                border-radius: 1rem;
+                border: none;
+            }
+
+            .modal-note .modal-header {
+                border-bottom: 1px solid #f3f4f6;
+                padding: 1.1rem 1.4rem;
+            }
+
+            .modal-note .modal-footer {
+                border-top: 1px solid #f3f4f6;
+                padding: 0.9rem 1.4rem;
+            }
+
+            .modal-note textarea {
+                border-radius: 0.75rem;
+                border: 1.5px solid #e0e7ef;
+                font-size: 0.9rem;
+                resize: none;
+            }
+
+            .modal-note textarea:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+            }
+
+            /* Skill rating stars inside modal */
+            .skill-stars {
+                display: flex;
+                gap: 0.3rem;
+            }
+
+            .skill-stars i {
+                font-size: 1.3rem;
+                color: #e9ecef;
+                cursor: pointer;
+                transition: color 0.1s;
+            }
+
+            .skill-stars i.active {
+                color: var(--warning);
+            }
+
+            /* ══ QUICK ACTIONS ═════════════════════════════════════════ */
+            .quick-btn {
+                display: flex;
+                align-items: center;
+                gap: 0.65rem;
+                padding: 0.75rem 1rem;
+                background: #f8f9fb;
+                border: 1px solid #e9ecef;
+                border-radius: 0.75rem;
+                font-size: 0.85rem;
+                font-weight: 600;
+                color: #1a1a2e;
+                cursor: pointer;
+                width: 100%;
+                text-align: left;
+                transition: background 0.15s, border-color 0.15s;
+                text-decoration: none;
+            }
+
+            .quick-btn i {
+                color: var(--primary);
+                font-size: 1rem;
+            }
+
+            .quick-btn:hover {
+                background: var(--primary-light);
+                border-color: #c9d8f5;
+                color: var(--primary);
+            }
+
+            /* ══ CALENDAR STRIP ════════════════════════════════════════ */
+            .cal-strip {
+                display: flex;
+                gap: 0.5rem;
+                overflow-x: auto;
+                padding-bottom: 0.25rem;
+            }
+
+            .cal-day {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                min-width: 44px;
+                padding: 0.5rem 0.4rem;
+                border-radius: 0.65rem;
+                font-size: 0.75rem;
+                cursor: pointer;
+                border: 1.5px solid transparent;
+                transition: all 0.15s;
+            }
+
+            .cal-day .d-name {
+                color: #adb5bd;
+                font-size: 0.68rem;
+                text-transform: uppercase;
+                font-weight: 600;
+            }
+
+            .cal-day .d-num {
+                font-weight: 800;
+                font-size: 1rem;
+                color: #1a1a2e;
+                margin: 0.1rem 0;
+            }
+
+            .cal-day .d-dot {
+                width: 5px;
+                height: 5px;
+                background: var(--primary);
+                border-radius: 50%;
+            }
+
+            .cal-day:hover {
+                background: var(--primary-light);
+                border-color: #c9d8f5;
+            }
+
+            .cal-day.today {
+                background: var(--primary);
+                border-color: var(--primary);
+            }
+
+            .cal-day.today .d-name,
+            .cal-day.today .d-num {
+                color: #fff;
+            }
+
+            .cal-day.today .d-dot {
+                background: #fff;
+            }
+
+            /* ══ NOTIFICATION TOAST ════════════════════════════════════ */
+            .toast-wrap {
+                position: fixed;
+                bottom: 1.5rem;
+                right: 1.5rem;
+                z-index: 9999;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .toast-msg {
+                background: #1a1a2e;
+                color: #fff;
+                border-radius: 0.75rem;
+                padding: 0.75rem 1.1rem;
+                font-size: 0.85rem;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 0.65rem;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+                animation: slideUp 0.3s ease, fadeOut 0.4s ease 2.8s forwards;
+            }
+
+            .toast-msg i {
+                font-size: 1rem;
+            }
+
+            .toast-msg.success i {
+                color: #4ade80;
+            }
+
+            .toast-msg.info i {
+                color: #60a5fa;
+            }
+
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(12px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                }
+
+                to {
+                    opacity: 0;
+                    pointer-events: none;
+                }
+            }
+
+            /* ══ VIEWS ════════════════════════════════════════════════ */
+            .view {
+                display: none;
+            }
+
+            .view.active {
+                display: block;
+            }
+
+            /* ══ RESPONSIVE ════════════════════════════════════════════ */
+            @media (max-width: 900px) {
+                .sidebar {
+                    transform: translateX(-100%);
+                }
+
+                .sidebar.open {
+                    transform: translateX(0);
+                }
+
+                .main-wrap {
+                    margin-left: 0;
+                }
+
+                .mob-menu-btn {
+                    display: flex !important;
+                }
+            }
+
+            .mob-menu-btn {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <!-- ══════════════════════════════════════════════════════════════
+     SIDEBAR
+════════════════════════════════════════════════════════════════ -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-name"><i class="bi bi-car-front-fill"></i> Drive<span>Connect</span></div>
+                <div class="brand-role">Instructor Portal</div>
+            </div>
+            <div class="sidebar-instructor">
+                <div class="instr-avatar">KP</div>
+                <div>
+                    <div class="instr-name">Kamal Perera</div>
+                    <div class="instr-id">ID: INS-0042 · SafeWheels</div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">Today</div>
+                <a class="sidebar-link active" onclick="showView('dashboard')">
+                    <i class="bi bi-grid-1x2"></i> Dashboard
+                </a>
+                <a class="sidebar-link" onclick="showView('schedule')">
+                    <i class="bi bi-calendar-check"></i> Today's Schedule
+                    <span class="nav-badge">6</span>
+                </a>
+                <a class="sidebar-link" onclick="showView('attendance')">
+                    <i class="bi bi-person-check"></i> Attendance
+                    <span class="nav-badge">4</span>
+                </a>
+
+                <div class="nav-section-label">Students</div>
+                <a class="sidebar-link" onclick="showView('students')">
+                    <i class="bi bi-people"></i> My Students
+                </a>
+                <a class="sidebar-link" onclick="showView('progress')">
+                    <i class="bi bi-graph-up"></i> Progress & Skills
+                </a>
+                <a class="sidebar-link" onclick="showView('messages')">
+                    <i class="bi bi-chat-dots"></i> Messages
+                    <span class="nav-badge">2</span>
+                </a>
+
+                <div class="nav-section-label">Reports</div>
+                <a class="sidebar-link" onclick="showView('reports')">
+                    <i class="bi bi-clipboard-data"></i> My Reports
+                </a>
+                <a class="sidebar-link" onclick="showView('schedule')">
+                    <i class="bi bi-calendar3"></i> Weekly Schedule
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#"><i class="bi bi-gear"></i> Settings</a>
+            </div>
+        </aside>
+
+        <!-- ══════════════════════════════════════════════════════════════
+     MAIN
+════════════════════════════════════════════════════════════════ -->
+        <div class="main-wrap">
+
+            <!-- Top bar -->
+            <header class="topbar">
+                <button class="mob-menu-btn topbar-icon-btn"
+                    onclick="document.getElementById('sidebar').classList.toggle('open')">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div>
+                    <div class="topbar-title" id="topbarTitle">Dashboard</div>
+                    <div class="topbar-date">Sunday, 28 June 2026</div>
+                </div>
+                <div class="topbar-actions">
+                    <div class="topbar-icon-btn" title="Notifications">
+                        <i class="bi bi-bell"></i>
+                        <span class="notif-dot"></span>
+                    </div>
+                    <div class="topbar-icon-btn" title="Help">
+                        <i class="bi bi-question-circle"></i>
+                    </div>
+                    <div class="instr-avatar" style="width:36px;height:36px;font-size:0.85rem;cursor:pointer;"
+                        title="Profile">KP</div>
+                </div>
+            </header>
+
+            <div class="page-body">
+
+                <!-- ══════════════════════════════════════════════════════════
+         VIEW: DASHBOARD
+    ══════════════════════════════════════════════════════════════ -->
+                <div class="view active" id="view-dashboard">
+
+                    <!-- Stats row -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card">
+                                <div class="stat-icon blue"><i class="bi bi-calendar-check"></i></div>
+                                <div>
+                                    <div class="stat-label">Today's Lessons</div>
+                                    <div class="stat-value">6</div>
+                                    <div class="stat-sub">2 completed</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card">
+                                <div class="stat-icon green"><i class="bi bi-person-check"></i></div>
+                                <div>
+                                    <div class="stat-label">Present Today</div>
+                                    <div class="stat-value">4</div>
+                                    <div class="stat-sub">of 4 marked</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card">
+                                <div class="stat-icon orange"><i class="bi bi-people"></i></div>
+                                <div>
+                                    <div class="stat-label">Active Students</div>
+                                    <div class="stat-value">14</div>
+                                    <div class="stat-sub">3 test-ready</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card">
+                                <div class="stat-icon red"><i class="bi bi-star"></i></div>
+                                <div>
+                                    <div class="stat-label">My Rating</div>
+                                    <div class="stat-value">4.9</div>
+                                    <div class="stat-sub">214 reviews</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <!-- Calendar strip + next lesson -->
+                        <div class="col-lg-8">
+                            <!-- Calendar strip -->
+                            <div class="panel mb-3">
+                                <div class="panel-header">
+                                    <h6><i class="bi bi-calendar3 text-primary me-2"></i>Week at a Glance</h6>
+                                    <button onclick="showView('schedule')"
+                                        style="background:none;border:none;font-size:0.8rem;color:var(--primary);font-weight:600;cursor:pointer;">Full
+                                        schedule →</button>
+                                </div>
+                                <div class="panel-body pt-2 pb-2">
+                                    <div class="cal-strip" id="calStrip"></div>
+                                </div>
+                            </div>
+
+                            <!-- Today's lessons (abbreviated) -->
+                            <div class="panel">
+                                <div class="panel-header">
+                                    <h6><i class="bi bi-clock text-primary me-2"></i>Today's Lessons</h6>
+                                    <button onclick="showView('schedule')"
+                                        style="background:none;border:none;font-size:0.8rem;color:var(--primary);font-weight:600;cursor:pointer;">View
+                                        all →</button>
+                                </div>
+                                <div class="panel-body" id="dashLessons"></div>
+                            </div>
+                        </div>
+
+                        <!-- Right column -->
+                        <div class="col-lg-4">
+                            <!-- Quick actions -->
+                            <div class="panel mb-3">
+                                <div class="panel-header">
+                                    <h6><i class="bi bi-lightning text-primary me-2"></i>Quick Actions</h6>
+                                </div>
+                                <div class="panel-body d-flex flex-column gap-2">
+                                    <button class="quick-btn" onclick="showView('attendance')"><i
+                                            class="bi bi-person-check"></i> Mark Attendance</button>
+                                    <button class="quick-btn" onclick="openNoteModal(null)"><i
+                                            class="bi bi-pencil-square"></i> Add Lesson Note</button>
+                                    <button class="quick-btn" onclick="showView('progress')"><i
+                                            class="bi bi-graph-up"></i> Update Skills</button>
+                                    <button class="quick-btn" onclick="showView('messages')"><i
+                                            class="bi bi-chat-dots"></i> Message a Student</button>
+                                </div>
+                            </div>
+
+                            <!-- Upcoming -->
+                            <div class="panel">
+                                <div class="panel-header">
+                                    <h6><i class="bi bi-alarm text-primary me-2"></i>Up Next</h6>
+                                </div>
+                                <div class="panel-body" id="upNextPanel"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ══════════════════════════════════════════════════════════
+         VIEW: SCHEDULE (Today's full timeline)
+    ══════════════════════════════════════════════════════════════ -->
+                <div class="view" id="view-schedule">
+                    <div class="row g-3">
+                        <div class="col-lg-8">
+                            <div class="panel">
+                                <div class="panel-header">
+                                    <h6><i class="bi bi-calendar-check text-primary me-2"></i>Today's Full Schedule — 28
+                                        June 2026</h6>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="lesson-timeline" id="fullTimeline"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="panel mb-3">
+                                <div class="panel-header">
+                                    <h6>Summary</h6>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="detail-row d-flex justify-content-between py-2 border-bottom"><span
+                                            class="text-muted" style="font-size:0.85rem;">Total
+                                            lessons</span><strong>6</strong></div>
+                                    <div class="detail-row d-flex justify-content-between py-2 border-bottom"><span
+                                            class="text-muted" style="font-size:0.85rem;">Completed</span><strong
+                                            class="text-success">2</strong></div>
+                                    <div class="detail-row d-flex justify-content-between py-2 border-bottom"><span
+                                            class="text-muted" style="font-size:0.85rem;">In progress</span><strong
+                                            class="text-primary">1</strong></div>
+                                    <div class="detail-row d-flex justify-content-between py-2"><span class="text-muted"
+                                            style="font-size:0.85rem;">Upcoming</span><strong>3</strong></div>
+                                </div>
+                            </div>
+                            <div class="panel">
+                                <div class="panel-header">
+                                    <h6>Vehicle Assigned</h6>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="stat-icon blue" style="border-radius:12px;"><i
+                                                class="bi bi-car-front"></i></div>
+                                        <div>
+                                            <div class="fw-700" style="font-size:0.9rem;font-weight:700;">Toyota Vitz
+                                            </div>
+                                            <div style="font-size:0.78rem;color:#6c757d;">CBQ-1234 · Manual</div>
+                                            <div style="font-size:0.72rem;margin-top:0.2rem;"><span
+                                                    style="color:var(--success);font-weight:600;"><i
+                                                        class="bi bi-circle-fill" style="font-size:0.5rem;"></i>
+                                                    Road-ready</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ══════════════════════════════════════════════════════════
+         VIEW: ATTENDANCE
+    ══════════════════════════════════════════════════════════════ -->
+                <div class="view" id="view-attendance">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h6><i class="bi bi-person-check text-primary me-2"></i>Mark Attendance — 28 June 2026</h6>
+                            <button class="att-btn present" onclick="markAllPresent()" style="font-size:0.75rem;"><i
+                                    class="bi bi-check-all"></i> Mark All Present</button>
+                        </div>
+                        <div class="panel-body p-0">
+                            <table class="roster-table" id="attendanceTable">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Time Slot</th>
+                                        <th>Lesson #</th>
+                                        <th>Package</th>
+                                        <th>Attendance</th>
+                                        <th>Lesson Note</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendanceTbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ══════════════════════════════════════════════════════════
+         VIEW: MY STUDENTS
+    ══════════════════════════════════════════════════════════════ -->
+                <div class="view" id="view-students">
+                    <!-- Search bar -->
+                    <div class="d-flex gap-2 mb-3">
+                        <div class="input-group" style="max-width:320px;">
+                            <span class="input-group-text bg-white"
+                                style="border-radius:50px 0 0 50px;border:1.5px solid #e0e7ef;border-right:none;"><i
+                                    class="bi bi-search text-muted"></i></span>
+                            <input type="text" class="form-control border-start-0" placeholder="Search students…"
+                                style="border-radius:0 50px 50px 0;border:1.5px solid #e0e7ef;border-left:none;"
+                                oninput="filterStudents(this.value)">
+                        </div>
+                        <select class="form-select w-auto"
+                            style="border-radius:50px;border:1.5px solid #e0e7ef;font-size:0.875rem;"
+                            onchange="filterStudents()">
+                            <option>All statuses</option>
+                            <option>Active</option>
+                            <option>Test-ready</option>
+                            <option>On hold</option>
+                        </select>
+                    </div>
+                    <div class="panel">
+                        <table class="roster-table" id="studentsTable">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Package</th>
+                                    <th>Progress</th>
+                                    <th>Attendance</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ══════════════════════════════════════════════════════════
+         VIEW: PROGRESS & SKILLS
+    ══════════════════════════════════════════════════════════════ -->
+                <div class="view" id="view-progress">
+                    <div class="row g-3">
+                        <!-- Student selector -->
+                        <div class="col-12">
+                            <div class="panel">
+                                <div class="panel-header">
+                                    <h6><i class="bi bi-graph-up text-primary me-2"></i>Student Progress & Skill
+                                        Assessment</h6>
+                                </div>
+                                <div class="panel-body pb-2">
+                                    <div class="d-flex gap-2 flex-wrap" id="progressStudentBtns"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Skill chart -->
+                        <div class="col-lg-7">
+                            <div class="panel h-100">
+                                <div class="panel-header">
+                                    <h6 id="skillStudentName">Select a student</h6>
+                                    <button class="att-btn note-btn" onclick="openSkillUpdateModal()"><i
+                                            class="bi bi-pencil"></i> Update Skills</button>
+                                </div>
+                                <div class="panel-body" id="skillPanel">
+                                    <div style="text-align:center;padding:2rem;color:#adb5bd;">
+                                        <i class="bi bi-person-circle" style="font-size:2.5rem;"></i>
+                                        <p class="mt-2" style="font-size:0.88rem;">Select a student above to view their
+                                            skill assessment.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Notes -->
+                        <div class="col-lg-5">
+                            <div class="panel h-100">
+                                <div class="panel-header">
+                                    <h6>Lesson Notes</h6>
+                                    <button class="att-btn note-btn" onclick="openNoteModal(currentProgressStudent)"><i
+                                            class="bi bi-plus"></i> Add Note</button>
+                                </div>
+                                <div class="panel-body" id="notesPanel">
+                                    <div style="text-align:center;padding:2rem;color:#adb5bd;font-size:0.85rem;">No
+                                        student selected.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ══════════════════════════════════════════════════════════
+         VIEW: MESSAGES (placeholder)
+    ══════════════════════════════════════════════════════════════ -->
+                <div class="view" id="view-messages">
+                    <div class="panel" style="text-align:center;padding:3rem;">
+                        <i class="bi bi-chat-dots" style="font-size:3rem;color:var(--primary);"></i>
+                        <h5 class="mt-3 fw-700">Messages</h5>
+                        <p class="text-muted" style="font-size:0.9rem;">You have <strong>2 unread messages</strong> from
+                            students.</p>
+                        <div style="max-width:400px;margin:1.5rem auto;text-align:left;">
+                            <div class="d-flex align-items-center gap-3 p-3 border rounded-3 mb-2"
+                                style="background:#f8f9fb;cursor:pointer;">
+                                <div class="s-avatar" style="background:linear-gradient(135deg,#0d6efd,#42a5f5);">DM
+                                </div>
+                                <div>
+                                    <div class="s-name">Dilshan M.</div>
+                                    <div class="s-phone">Can I reschedule tomorrow's lesson?</div>
+                                </div>
+                                <div class="ms-auto"><span class="att-pill present-pill">New</span></div>
+                            </div>
+                            <div class="d-flex align-items-center gap-3 p-3 border rounded-3 mb-2"
+                                style="background:#f8f9fb;cursor:pointer;">
+                                <div class="s-avatar" style="background:linear-gradient(135deg,#be123c,#fb7185);">PJ
+                                </div>
+                                <div>
+                                    <div class="s-name">Priya J.</div>
+                                    <div class="s-phone">Thank you for today's lesson!</div>
+                                </div>
+                                <div class="ms-auto"><span class="att-pill present-pill">New</span></div>
+                            </div>
+                        </div>
+                        <button class="quick-btn" style="max-width:200px;margin:0 auto;justify-content:center;"><i
+                                class="bi bi-chat-dots"></i> Open Inbox</button>
+                    </div>
+                </div>
+
+                <!-- ══════════════════════════════════════════════════════════
+         VIEW: REPORTS (placeholder)
+    ══════════════════════════════════════════════════════════════ -->
+                <div class="view" id="view-reports">
+                    <div class="row g-3">
+                        <div class="col-lg-4">
+                            <div class="panel">
+                                <div class="panel-header">
+                                    <h6><i class="bi bi-file-earmark-bar-graph text-primary me-2"></i>Monthly Summary
+                                    </h6>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="d-flex justify-content-between py-2 border-bottom"><span
+                                            class="text-muted" style="font-size:0.85rem;">Lessons
+                                            given</span><strong>48</strong></div>
+                                    <div class="d-flex justify-content-between py-2 border-bottom"><span
+                                            class="text-muted" style="font-size:0.85rem;">Students
+                                            trained</span><strong>14</strong></div>
+                                    <div class="d-flex justify-content-between py-2 border-bottom"><span
+                                            class="text-muted" style="font-size:0.85rem;">Pass rate</span><strong
+                                            class="text-success">97%</strong></div>
+                                    <div class="d-flex justify-content-between py-2 border-bottom"><span
+                                            class="text-muted" style="font-size:0.85rem;">Avg.
+                                            attendance</span><strong>94%</strong></div>
+                                    <div class="d-flex justify-content-between py-2"><span class="text-muted"
+                                            style="font-size:0.85rem;">My rating</span><strong class="text-warning">⭐
+                                            4.9</strong></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="panel">
+                                <div class="panel-header">
+                                    <h6>Attendance Heatmap (June 2026)</h6>
+                                </div>
+                                <div class="panel-body" id="heatmapPanel"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /page-body -->
+        </div><!-- /main-wrap -->
+
+        <!-- ══════════════════════════════════════════════════════════════
+     NOTE / ASSESSMENT MODAL
+════════════════════════════════════════════════════════════════ -->
+        <div class="modal fade modal-note" id="noteModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title fw-700" id="noteModalTitle">Add Lesson Note</h6>
+                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label"
+                                style="font-size:0.82rem;font-weight:600;color:#495057;">Student</label>
+                            <select class="form-select" id="noteStudent"
+                                style="border-radius:0.65rem;border:1.5px solid #e0e7ef;font-size:0.88rem;"></select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" style="font-size:0.82rem;font-weight:600;color:#495057;">Lesson
+                                Date</label>
+                            <input type="date" class="form-control" id="noteDate"
+                                style="border-radius:0.65rem;border:1.5px solid #e0e7ef;font-size:0.88rem;">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"
+                                style="font-size:0.82rem;font-weight:600;color:#495057;">Note</label>
+                            <textarea class="form-control" id="noteText" rows="4"
+                                placeholder="Describe what was covered, what went well, and what needs more practice…"></textarea>
+                        </div>
+                        <div>
+                            <label class="form-label" style="font-size:0.82rem;font-weight:600;color:#495057;">Overall
+                                lesson rating</label>
+                            <div class="skill-stars" id="noteStars">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                    class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="att-btn note-btn" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="att-btn present" onclick="saveNote()"
+                            style="padding:0.45rem 1.25rem;">Save Note</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skill update modal -->
+        <div class="modal fade modal-note" id="skillModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title fw-700">Update Skill Assessment</h6>
+                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p style="font-size:0.82rem;color:#6c757d;margin-bottom:1rem;">Rate each skill from 1 (needs
+                            work) to 10 (test-ready).</p>
+                        <div id="skillUpdateInputs"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="att-btn note-btn" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="att-btn present" onclick="saveSkills()"
+                            style="padding:0.45rem 1.25rem;">Save Skills</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast container -->
+        <div class="toast-wrap" id="toastWrap"></div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // ══════════════════════════════════════════════════════════════════
+            //  DATA
+            // ══════════════════════════════════════════════════════════════════
+            const STUDENTS = [
+                { id: 's1', name: 'Dilshan Mendis', initials: 'DM', phone: '077-123-4567', color: 'linear-gradient(135deg,#0d6efd,#42a5f5)', pkg: 'Standard (15)', lessons: 9, total: 15, att: 88, status: 'Active', skills: { steering: 7, gear: 6, mirror: 8, parking: 5, road: 7, braking: 8, reversing: 4, junctions: 6 }, notes: ['Good lane discipline. Work on parallel parking.', 'Improved gear changes. Still hesitant at roundabouts.'] },
+                { id: 's2', name: 'Priya Jayawardena', initials: 'PJ', phone: '071-234-5678', color: 'linear-gradient(135deg,#be123c,#fb7185)', pkg: 'Premium (25)', lessons: 22, total: 25, att: 96, status: 'Test-ready', skills: { steering: 9, gear: 9, mirror: 9, parking: 8, road: 9, braking: 9, reversing: 8, junctions: 9 }, notes: ['Excellent session today. Ready for test booking.'] },
+                { id: 's3', name: 'Tharaka Wijesinghe', initials: 'TW', phone: '076-345-6789', color: 'linear-gradient(135deg,#166534,#22c55e)', pkg: 'Standard (15)', lessons: 5, total: 15, att: 80, status: 'Active', skills: { steering: 5, gear: 4, mirror: 5, parking: 3, road: 4, braking: 6, reversing: 3, junctions: 4 }, notes: ['First few sessions. Very nervous, needs encouragement.'] },
+                { id: 's4', name: 'Chamari Perera', initials: 'CP', phone: '070-456-7890', color: 'linear-gradient(135deg,#92400e,#f59e0b)', pkg: 'Starter (8)', lessons: 7, total: 8, att: 100, status: 'Active', skills: { steering: 7, gear: 7, mirror: 6, parking: 6, road: 7, braking: 7, reversing: 6, junctions: 6 }, notes: ['Almost done with package. Recommend upgrading to Standard.'] },
+                { id: 's5', name: 'Roshan Karunaratne', initials: 'RK', phone: '075-567-8901', color: 'linear-gradient(135deg,#5b21b6,#8b5cf6)', pkg: 'Standard (15)', lessons: 12, total: 15, att: 73, status: 'Active', skills: { steering: 8, gear: 7, mirror: 7, parking: 7, road: 7, braking: 8, reversing: 7, junctions: 7 }, notes: ['Missed 3 sessions. Good progress when attending.'] },
+                { id: 's6', name: 'Sanjana Perera', initials: 'SP', phone: '072-678-9012', color: 'linear-gradient(135deg,#0c4a6e,#0ea5e9)', pkg: 'Premium (25)', lessons: 3, total: 25, att: 100, status: 'Active', skills: { steering: 3, gear: 3, mirror: 4, parking: 2, road: 3, braking: 4, reversing: 2, junctions: 3 }, notes: ['First lesson today. Complete beginner, very cautious.'] },
+            ];
+
+            const LESSONS = [
+                { time: '08:00', ampm: 'AM', studentId: 's1', lessonNum: 9, type: 'Road driving · City route', vehicle: 'Toyota Vitz · CBQ-1234', status: 'done', att: 'present' },
+                { time: '09:30', ampm: 'AM', studentId: 's2', lessonNum: 22, type: 'Highway driving + mock test', vehicle: 'Toyota Vitz · CBQ-1234', status: 'done', att: 'present' },
+                { time: '11:00', ampm: 'AM', studentId: 's3', lessonNum: 5, type: 'Gear control & clutch', vehicle: 'Toyota Vitz · CBQ-1234', status: 'now', att: null },
+                { time: '01:00', ampm: 'PM', studentId: 's4', lessonNum: 7, type: 'Parallel parking practice', vehicle: 'Toyota Vitz · CBQ-1234', status: 'upcoming', att: null },
+                { time: '02:30', ampm: 'PM', studentId: 's5', lessonNum: 12, type: 'Roundabouts & junctions', vehicle: 'Toyota Vitz · CBQ-1234', status: 'upcoming', att: null },
+                { time: '04:00', ampm: 'PM', studentId: 's6', lessonNum: 3, type: 'Basic manoeuvres + reversing', vehicle: 'Toyota Vitz · CBQ-1234', status: 'upcoming', att: null },
+            ];
+
+            const SKILL_LABELS = { steering: 'Steering control', gear: 'Gear changes', mirror: 'Mirror checks', parking: 'Parking', road: 'Road awareness', braking: 'Braking', reversing: 'Reversing', junctions: 'Junctions' };
+            const SKILL_COLORS = [40, 60, 75, 85];  // % thresholds for color
+
+            let currentProgressStudent = null;
+            let skillModalStudent = null;
+            let noteModal, skillModal;
+
+            // ══════════════════════════════════════════════════════════════════
+            //  INIT
+            // ══════════════════════════════════════════════════════════════════
+            document.addEventListener('DOMContentLoaded', () => {
+                noteModal = new bootstrap.Modal(document.getElementById('noteModal'));
+                skillModal = new bootstrap.Modal(document.getElementById('skillModal'));
+                buildCalStrip();
+                buildDashLessons();
+                buildUpNext();
+                buildFullTimeline();
+                buildAttendanceTable();
+                buildStudentsTable();
+                buildProgressStudentBtns();
+                buildHeatmap();
+                populateNoteStudentSelect();
+                setDefaultDate();
+                initNoteStars();
+            });
+
+            // ══════════════════════════════════════════════════════════════════
+            //  VIEW SWITCHING
+            // ══════════════════════════════════════════════════════════════════
+            const viewTitles = { dashboard: 'Dashboard', schedule: "Today's Schedule", attendance: 'Mark Attendance', students: 'My Students', progress: 'Progress & Skills', messages: 'Messages', reports: 'Reports' };
+
+            function showView(id) {
+                document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+                document.getElementById('view-' + id).classList.add('active');
+                document.getElementById('topbarTitle').textContent = viewTitles[id] || id;
+                document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+                // Approximate match by onclick text
+                document.querySelectorAll('.sidebar-link').forEach(l => {
+                    if (l.getAttribute('onclick') && l.getAttribute('onclick').includes("'" + id + "'")) l.classList.add('active');
+                });
+            }
+
+            // ══════════════════════════════════════════════════════════════════
+            //  CALENDAR STRIP
+            // ══════════════════════════════════════════════════════════════════
+            function buildCalStrip() {
+                const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                const today = new Date('2026-06-28');
+                let html = '';
+                for (let i = -3; i <= 6; i++) {
+                    const d = new Date(today); d.setDate(today.getDate() + i);
+                    const isToday = i === 0;
+                    const hasDot = [0, 1, 2, 4, 5].includes(i + 3); // days with lessons
+                    html += `<div class="cal-day ${isToday ? 'today' : ''}">
+            <span class="d-name">${days[d.getDay()]}</span>
+            <span class="d-num">${d.getDate()}</span>
+            ${hasDot ? '<span class="d-dot"></span>' : '<span style="height:5px;display:block;"></span>'}
+        </div>`;
+                }
+                document.getElementById('calStrip').innerHTML = html;
+            }
+
+            // ══════════════════════════════════════════════════════════════════
+            //  HELPERS
+            // ══════════════════════════════════════════════════════════════════
+            function student(id) { return STUDENTS.find(s => s.id === id); }
+
+            function statusBadge(s) {
+                if (s === 'done') return `<span class="lc-status done">Completed</span>`;
+                if (s === 'now') return `<span class="lc-status now">In Progress</span>`;
+                if (s === 'upcoming') return `<span class="lc-status upcoming">Upcoming</span>`;
+                return '';
+            }
+
+            function avatarDiv(stu, size = 36) {
+                return `<div class="lc-avatar" style="background:${stu.color};width:${size}px;height:${size}px;">${stu.initials}</div>`;
+            }
+
+            // ══════════════════════════════════════════════════════════════════
+            //  DASHBOARD LESSONS (top 3)
+            // ══════════════════════════════════════════════════════════════════
+            function buildDashLessons() {
+                const show = LESSONS.slice(0, 4);
+                let html = '<div class="lesson-timeline">';
+                show.forEach((les, idx) => {
+                    const stu = student(les.studentId);
+                    const isLast = idx === show.length - 1;
+                    html += `
+        <div class="lesson-block">
+            <div class="timeline-time"><span class="t-hour">${les.time}</span><br><span class="t-ampm">${les.ampm}</span></div>
+            <div class="timeline-rail">
+                <div class="rail-dot ${les.status}"></div>
+                ${!isLast ? '<div class="rail-line' + (les.status === 'done' ? ' done' : '') + '"></div>' : ''}
+            </div>
+            <div class="lesson-card ${les.status === 'now' ? 'active-now' : ''} ${les.status === 'done' ? 'completed' : ''}" style="margin-left:0.75rem;" onclick="showView('schedule')">
+                <div class="lc-top">
+                    ${avatarDiv(stu)}
+                    <div><div class="lc-name">${stu.name}</div><div class="lc-lesson">${les.type}</div></div>
+                    ${statusBadge(les.status)}
+                </div>
+            </div>
+        </div>`;
+                });
+                html += '</div>';
+                document.getElementById('dashLessons').innerHTML = html;
+            }
+
+            // ══════════════════════════════════════════════════════════════════
+            //  UP NEXT PANEL
+            // ══════════════════════════════════════════════════════════════════
+            function buildUpNext() {
+                const next = LESSONS.find(l => l.status === 'now') || LESSONS.find(l => l.status === 'upcoming');
+                if (!next) { document.getElementById('upNextPanel').innerHTML = '<p class="text-muted" style="font-size:0.85rem;">No more lessons today.</p>'; return; }
+                const stu = student(next.studentId);
+                document.getElementById('upNextPanel').innerHTML = `
+        <div class="d-flex align-items-center gap-2 mb-2">
+            ${avatarDiv(stu, 40)}
+            <div>
+                <div class="fw-700" style="font-size:0.9rem;">${stu.name}</div>
+                <div style="font-size:0.78rem;color:#6c757d;">Lesson #${next.lessonNum}</div>
+            </div>
+        </div>
+        <div style="background:#f8f9fb;border-radius:0.65rem;padding:0.75rem;font-size:0.82rem;">
+            <div class="d-flex gap-2 mb-1"><i class="bi bi-clock text-primary"></i> <strong>${next.time} ${next.ampm}</strong></div>
+            <div class="d-flex gap-2 mb-1"><i class="bi bi-signpost text-primary"></i> ${next.type}</div>
+            <div class="d-flex gap-2"><i class="bi bi-car-front text-primary"></i> ${next.vehicle}</div>
+        </div>
+        <button class="quick-btn mt-2" onclick="openNoteModal('${stu.id}')"><i class="bi bi-pencil-square"></i> Add note after lesson</button>
+    `;
+            }
+
+            // ══════════════════════════════════════════════════════════════════
+            //  FULL TIMELINE
+            // ══════════════════════════════════════════════════════════════════
+            function buildFullTimeline() {
+                let html = '';
+                LESSONS.forEach((les, idx) => {
+                    const stu = student(les.studentId);
+                    const isLast = idx === LESSONS.length - 1;
+                    html += `
+        <div class="lesson-block">
+            <div class="timeline-time"><span class="t-hour">${les.time}</span><br><span class="t-ampm">${les.ampm}</span></div>
+            <div class="timeline-rail">
+                <div class="rail-dot ${les.status}"></div>
+                ${!isLast ? '<div class="rail-line' + (les.status === 'done' ? ' done' : '') + '"></div>' : ''}
+            </div>
+            <div class="lesson-card ${les.status === 'now' ? 'active-now' : ''} ${les.status === 'done' ? 'completed' : ''}" style="margin-left:0.75rem;">
+                <div class="lc-top">
+                    ${avatarDiv(stu)}
+                    <div>
+                        <div class="lc-name">${stu.name}</div>
+                        <div class="lc-lesson">Lesson #${les.lessonNum} · ${les.type}</div>
+                    </div>
+                    ${statusBadge(les.status)}
+                </div>
+                <div class="lc-meta">
+                    <span class="lc-meta-item"><i class="bi bi-car-front"></i> ${les.vehicle}</span>
+                    <span class="lc-meta-item"><i class="bi bi-book"></i> ${stu.pkg}</span>
+                    <span class="lc-meta-item"><i class="bi bi-graph-up"></i> Lesson ${les.lessonNum}/${stu.total}</span>
+                </div>
+                ${les.status !== 'upcoming' ? `
+                <div class="lc-actions">
+                    ${les.att === 'present' ? '<span class="att-pill present-pill"><i class="bi bi-check-circle-fill"></i> Present</span>' : les.att === 'absent' ? '<span class="att-pill absent-pill"><i class="bi bi-x-circle-fill"></i> Absent</span>' : ''}
+                    <button class="att-btn note-btn" onclick="openNoteModal('${stu.id}')"><i class="bi bi-pencil"></i> Note</button>
+                    <button class="att-btn note-btn" onclick="showStudentProgress('${stu.id}')"><i class="bi bi-graph-up"></i> Skills</button>
+                </div>` : `
+                <div class="lc-actions">
+                    <button class="att-btn note-btn" onclick="openNoteModal('${stu.id}')"><i class="bi bi-pencil"></i> Pre-lesson note</button>
+                </div>`}
+            </div>
+        </div>`;
+                });
+                document.getElementById('fullTimeline').innerHTML = html;
+            }
+
+            // ══════════════════════════════════════════════════════════════════
+            //  ATTENDANCE TABLE
+            // ══════════════════════════════════════════════════════════════════
+            function buildAttendanceTable() {
+                let html = '';
+                LESSONS.forEach((les, idx) => {
+                    const stu = student(les.studentId);
+                    const attState = les.att;
+                    html += `
+        <tr id="att-row-${idx}">
+            <td>
+                <div class="student-cell">
+                    <div class="s-avatar" style="background:${stu.color};">${stu.initials}</div>
+                    <div><div class="s-name">${stu.name}</div><div class="s-phone">${stu.phone}</div></div>
+                </div>
+            </td>
+            <td><strong>${les.time} ${les.ampm}</strong></td>
+            <td>Lesson #${les.lessonNum}</td>
+            <td>${stu.pkg}</td>
+            <td>
+                <div class="d-flex gap-1">
+                    <button class="att-btn ${attState === 'present' ? 'present' : ''}" id="att-p-${idx}" onclick="markAtt(${idx},'present')"><i class="bi bi-check-lg"></i> Present</button>
+                    <button class="att-btn ${attState === 'absent' ? 'absent' : ''}"  id="att-a-${idx}" onclick="markAtt(${idx},'absent')"><i class="bi bi-x-lg"></i> Absent</button>
+                </div>
+            </td>
+            <td>
+                <button class="att-btn note-btn" onclick="openNoteModal('${stu.id}')"><i class="bi bi-pencil"></i> Note</button>
+            </td>
+        </tr>`;
+                });
+                document.getElementById('attendanceTbody').innerHTML = html;
+            }
+
+            function markAtt(idx, state) {
+                LESSONS[idx].att = LESSONS[idx].att === state ? null : state;
+                const pBtn = document.getElementById('att-p-' + idx);
+                const aBtn = document.getElementById('att-a-' + idx);
+                pBtn.className = 'att-btn ' + (LESSONS[idx].att === 'present' ? 'present' : '');
+                aBtn.className = 'att-btn ' + (LESSONS[idx].att === 'absent' ? 'absent' : '');
+                toast(state === 'present' ? '✅ Marked as present' : '❌ Marked as absent', state === 'present' ? 'success' : 'info');
+                buildDashLessons(); buildFullTimeline();
+            }
+
+            function markAllPresent() {
+                LESSONS.forEach((les, idx) => {
+                    if (les.status !== 'upcoming') {
+                        les.att = 'present';
+                        const pBtn = document.getElementById('att-p-' + idx);
+                        const aBtn = document.getElementById('att-a-' + idx);
+                        if (pBtn) { pBtn.className = 'att-btn present'; aBtn.className = 'att-btn'; }
+                    }
+                });
+                toast('✅ All available lessons marked present', 'success');
+            }
+
+            // ══════════════════════════════════════════════════════════════════
+            //  STUDENTS TABLE
+            // ══════════════════════════════════════════════════════════════════
+            function buildStudentsTable(filter = '') {
+                const list = STUDENTS.filter(s => !filter || s.name.toLowerCase().includes(filter.toLowerCase()));
+                let html = list.map(stu => {
+                    const pct = Math.round(stu.lessons / stu.total * 100);
+                    const statusColor = { 'Active': 'primary', 'Test-ready': 'success', 'On hold': 'warning' }[stu.status] || 'secondary';
+                    return `
+        <tr>
+            <td>
+                <div class="student-cell">
+                    <div class="s-avatar" style="background:${stu.color};">${stu.initials}</div>
+                    <div><div class="s-name">${stu.name}</div><div class="s-phone">${stu.phone}</div></div>
+                </div>
+            </td>
+            <td style="font-size:0.82rem;">${stu.pkg}</td>
+            <td>
+                <div class="d-flex align-items-center gap-1">
+                    <div class="progress-bar-custom"><div class="progress-bar-fill" style="width:${pct}%;"></div></div>
+                    <span class="progress-label">${stu.lessons}/${stu.total}</span>
+                </div>
+            </td>
+            <td>
+                <span class="att-pill ${stu.att >= 80 ? 'present-pill' : 'absent-pill'}">${stu.att}%</span>
+            </td>
+            <td><span class="badge bg-${statusColor}-subtle text-${statusColor} rounded-pill" style="font-size:0.72rem;font-weight:700;">${stu.status}</span></td>
+            <td>
+                <div class="d-flex gap-1">
+                    <button class="att-btn note-btn" onclick="showStudentProgress('${stu.id}')"><i class="bi bi-graph-up"></i> Skills</button>
+                    <button class="att-btn note-btn" onclick="openNoteModal('${stu.id}')"><i class="bi bi-pencil"></i> Note</button>
+                </div>
+            </td>
+        </tr>`;
+                }).join('');
+                document.getElementById('studentsTbody').innerHTML = html || '<tr><td colspan="6" class="text-center text-muted py-4">No students found.</td></tr>';
+            }
+
+            function filterStudents(val = '') { buildStudentsTable(val); }
+
+            // ══════════════════════════════════════════════════════════════════
+            //  PROGRESS / SKILLS
+            // ══════════════════════════════════════════════════════════════════
+            function buildProgressStudentBtns() {
+                document.getElementById('progressStudentBtns').innerHTML = STUDENTS.map(s =>
+                    `<button class="att-btn note-btn" id="pbtn-${s.id}" onclick="showStudentProgress('${s.id}')" style="display:flex;align-items:center;gap:0.5rem;">
+            <div class="s-avatar" style="background:${s.color};width:24px;height:24px;font-size:0.65rem;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700;">${s.initials}</div>
+            ${s.name.split(' ')[0]}
+        </button>`).join('');
+            }
+
+            function showStudentProgress(sid) {
+                currentProgressStudent = sid;
+                showView('progress');
+                const stu = student(sid);
+                document.querySelectorAll('[id^="pbtn-"]').forEach(b => b.classList.remove('present'));
+                const pbtn = document.getElementById('pbtn-' + sid);
+                if (pbtn) pbtn.classList.add('present');
+                document.getElementById('skillStudentName').textContent = `${stu.name} — Skill Assessment`;
+
+                const skillEntries = Object.entries(stu.skills);
+                let skillHtml = '';
+                skillEntries.forEach(([key, val]) => {
+                    const pct = val * 10;
+                    const color = pct < 40 ? '#dc3545' : pct < 65 ? '#f59e0b' : pct < 85 ? '#0d6efd' : '#198754';
+                    skillHtml += `<div class="skill-row">
+            <span class="skill-label">${SKILL_LABELS[key]}</span>
+            <div class="skill-bar"><div class="skill-fill" style="width:${pct}%;background:${color};"></div></div>
+            <span class="skill-score">${val}/10</span>
+        </div>`;
+                });
+                const overall = Math.round(Object.values(stu.skills).reduce((a, b) => a + b, 0) / skillEntries.length * 10);
+                skillHtml += `<div class="d-flex align-items-center gap-2 mt-3 p-3" style="background:#f8f9fb;border-radius:0.75rem;">
+        <div style="font-size:0.82rem;color:#6c757d;flex:1;">Overall readiness</div>
+        <div class="progress-bar-custom" style="width:120px;height:10px;"><div class="progress-bar-fill" style="width:${overall}%;background:${overall < 50 ? '#dc3545' : overall < 75 ? '#f59e0b' : '#198754'};"></div></div>
+        <strong style="font-size:0.9rem;">${overall}%</strong>
+        ${overall >= 80 ? '<span class="att-pill present-pill">Test-ready</span>' : ''}
+    </div>`;
+
+                document.getElementById('skillPanel').innerHTML = skillHtml;
+
+                // Notes
+                let notesHtml = stu.notes.length ? stu.notes.slice().reverse().map((n, i) =>
+                    `<div style="background:#f8f9fb;border-radius:0.75rem;padding:0.85rem 1rem;margin-bottom:0.65rem;font-size:0.85rem;border-left:3px solid var(--primary);">
+            <div style="color:#6c757d;font-size:0.72rem;margin-bottom:0.3rem;">Lesson note ${stu.notes.length - i}</div>
+            ${n}
+        </div>`).join('') : '<p style="color:#adb5bd;font-size:0.85rem;">No notes yet.</p>';
+                document.getElementById('notesPanel').innerHTML = notesHtml;
+            }
+
+            // ══════════════════════════════════════════════════════════════════
+            //  NOTE MODAL
+            // ══════════════════════════════════════════════════════════════════
+            function populateNoteStudentSelect(selectedId = null) {
+                document.getElementById('noteStudent').innerHTML = STUDENTS.map(s =>
+                    `<option value="${s.id}" ${s.id === selectedId ? 'selected' : ''}>${s.name}</option>`).join('');
+            }
+
+            function setDefaultDate() {
+                document.getElementById('noteDate').value = '2026-06-28';
+            }
+
+            function openNoteModal(sid) {
+                populateNoteStudentSelect(sid);
+                noteModal.show();
+            }
+
+            function saveNote() {
+                const sid = document.getElementById('noteStudent').value;
+                const text = document.getElementById('noteText').value.trim();
+                if (!text) { toast('Please enter a note.', 'info'); return; }
+                const stu = student(sid);
+                stu.notes.push(text);
+                document.getElementById('noteText').value = '';
+                noteModal.hide();
+                toast('📝 Note saved for ' + stu.name, 'success');
+                if (currentProgressStudent === sid) showStudentProgress(sid);
+            }
+
+            function initNoteStars() {
+                const stars = document.querySelectorAll('#noteStars i');
+                stars.forEach((star, i) => {
+                    star.addEventListener('mouseover', () => stars.forEach((s, j) => s.classList.toggle('active', j <= i)));
+                    star.addEventListener('click', () => stars.forEach((s, j) => { s.classList.toggle('active', j <= i); }));
+                });
+                document.getElementById('noteStars').addEventListener('mouseleave', () => {
+                    // keep selected
+                });
+            }
+
+            // ══════════════════════════════════════════════════════════════════
+            //  SKILL UPDATE MODAL
+            // ══════════════════════════════════════════════════════════════════
+            function openSkillUpdateModal() {
+                if (!currentProgressStudent) { toast('Select a student first.', 'info'); return; }
+                skillModalStudent = currentProgressStudent;
+                const stu = student(skillModalStudent);
+                let html = '';
+                Object.entries(stu.skills).forEach(([key, val]) => {
+                    html += `<div class="d-flex align-items-center gap-2 mb-3">
+            <label style="font-size:0.82rem;font-weight:600;width:130px;color:#495057;">${SKILL_LABELS[key]}</label>
+            <input type="range" class="form-range flex-1" min="1" max="10" value="${val}" id="skill-inp-${key}"
+                oninput="document.getElementById('skill-val-${key}').textContent=this.value" style="flex:1;">
+            <span id="skill-val-${key}" style="width:30px;text-align:center;font-weight:700;">${val}</span>
+        </div>`;
+                });
+                document.getElementById('skillUpdateInputs').innerHTML = html;
+                skillModal.show();
+            }
+
+            function saveSkills() {
+                const stu = student(skillModalStudent);
+                Object.keys(stu.skills).forEach(key => {
+                    stu.skills[key] = parseInt(document.getElementById('skill-inp-' + key).value);
+                });
+                skillModal.hide();
+                toast('✅ Skills updated for ' + stu.name, 'success');
+                showStudentProgress(skillModalStudent);
+            }
+
+            // ══════════════════════════════════════════════════════════════════
+            //  HEATMAP
+            // ══════════════════════════════════════════════════════════════════
+            function buildHeatmap() {
+                const data = [1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1];
+                const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                let html = '<div style="overflow-x:auto;"><table style="border-collapse:separate;border-spacing:4px;">';
+                // Headers
+                html += '<tr><td style="width:30px;"></td>';
+                for (let w = 0; w < 5; w++) html += `<td colspan="7" style="text-align:center;font-size:0.7rem;color:#adb5bd;padding-bottom:0.25rem;">Week ${w + 1}</td>`;
+                html += '</tr>';
+                html += '<tr><td></td>';
+                for (let w = 0; w < 5; w++) days.forEach(d => { html += `<td style="font-size:0.65rem;color:#adb5bd;text-align:center;">${d[0]}</td>`; });
+                html += '</tr><tr><td style="font-size:0.72rem;color:#6c757d;padding-right:0.5rem;">Jun</td>';
+                for (let i = 0; i < 35; i++) {
+                    if (i >= 30) { html += '<td></td>'; continue; }
+                    const lessons = data[i] ? Math.floor(Math.random() * 4) + 1 : 0;
+                    const bg = lessons === 0 ? '#f0f4f9' : lessons <= 2 ? '#bfdbfe' : lessons <= 4 ? '#3b82f6' : '#0d6efd';
+                    html += `<td style="width:20px;height:20px;background:${bg};border-radius:3px;cursor:pointer;" title="${i + 1} Jun: ${lessons} lesson${lessons !== 1 ? 's' : ''}"></td>`;
+                }
+                html += '</tr></table>';
+                html += '<div class="d-flex align-items-center gap-2 mt-2" style="font-size:0.72rem;color:#6c757d;"><span>Less</span>';
+                ['#f0f4f9', '#bfdbfe', '#3b82f6', '#0d6efd'].forEach(c => { html += `<div style="width:14px;height:14px;background:${c};border-radius:2px;"></div>`; });
+                html += '<span>More</span></div></div>';
+                document.getElementById('heatmapPanel').innerHTML = html;
+            }
+
+            // ══════════════════════════════════════════════════════════════════
+            //  TOAST
+            // ══════════════════════════════════════════════════════════════════
+            function toast(msg, type = 'info') {
+                const el = document.createElement('div');
+                el.className = `toast-msg ${type}`;
+                el.innerHTML = `<i class="bi bi-${type === 'success' ? 'check-circle-fill' : 'info-circle-fill'}"></i> ${msg}`;
+                document.getElementById('toastWrap').appendChild(el);
+                setTimeout(() => el.remove(), 3300);
+            }
+        </script>
+    </body>
+
+</html>4

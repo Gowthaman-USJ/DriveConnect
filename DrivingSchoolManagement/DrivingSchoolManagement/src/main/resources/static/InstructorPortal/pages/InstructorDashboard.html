@@ -21,15 +21,23 @@
 
 <div class="view active" id="view-dashboard">
     <div class="page-body">
-        <!-- Stats row -->
+        <main class="dashboard-content">
+
+            <div class="welcome-banner">
+                <h2>
+                    <span id="greeting"></span>,
+                    <span id="insname"></span> 👋
+                </h2>
+            </div>
+        </main>
+
         <div class="row g-3 mb-2">
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="stat-card">
                     <div class="stat-icon blue"><i class="bi bi-calendar-check"></i></div>
                     <div>
                         <div class="stat-label">Today's Lessons</div>
-                        <div class="stat-value" id="todayLessons"></div>
-                        <div class="stat-sub" id="completedLessons"></div>
+                        <div class="stat-value" id="todayLessons">0</div>
                     </div>
                 </div>
             </div>
@@ -38,7 +46,7 @@
                     <div class="stat-icon orange"><i class="bi bi-people"></i></div>
                     <div>
                         <div class="stat-label">Active Students</div>
-                        <div class="stat-value" id="students"></div>
+                        <div class="stat-value" id="students">0</div>
                     </div>
                 </div>
             </div>

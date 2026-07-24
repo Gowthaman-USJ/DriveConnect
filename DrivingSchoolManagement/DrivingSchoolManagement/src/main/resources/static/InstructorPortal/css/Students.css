@@ -99,20 +99,18 @@
     filter: invert(1);
 }
 
-/* Body */
 .view-modal .modal-body {
     padding: 28px;
     background: #f8fafc;
 }
 
-/* Labels */
+
 .view-modal label {
     color: #334155;
     margin-bottom: 6px;
     font-size: .95rem;
 }
 
-/* Inputs */
 .view-modal .form-control {
     border-radius: 14px;
     border: 1px solid #dbe3ef;
@@ -133,14 +131,13 @@
     opacity: 1;
 }
 
-/* Footer */
+
 .view-modal .modal-footer {
     border: none;
     padding: 18px 24px;
     background: #fff;
 }
 
-/* Close Button */
 .view-modal .btn-secondary {
     border-radius: 12px;
     padding: 8px 22px;
@@ -168,4 +165,90 @@
 .view-modal label {
     font-size: 14px;
     margin-bottom: 4px;
+}
+
+.roster-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.roster-table th {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #6c757d;
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1.5px solid #e9ecef;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.roster-table td {
+    padding: 0.75rem 0.9rem;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 0.875rem;
+    vertical-align: middle;
+}
+
+.roster-table tr:last-child td {
+    border-bottom: none;
+}
+
+.roster-table tr:hover td {
+    background: #f8f9fb;
+}
+
+.student-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.s-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: #fff;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.s-name {
+    font-weight: 600;
+    font-size: 0.86rem;
+    color: #212529;
+}
+
+.s-phone {
+    font-size: 0.72rem;
+    color: #9aa0a6;
+}
+
+
+
+.progress-bar-custom {
+    height: 6px;
+    background: #e9ecef;
+    border-radius: 50px;
+    overflow: hidden;
+    width: 80px;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 50px;
+}
+
+.progress-label {
+    font-size: 0.75rem;
+    color: #495057;
+    font-weight: 600;
+    margin-left: 0.4rem;
 }
