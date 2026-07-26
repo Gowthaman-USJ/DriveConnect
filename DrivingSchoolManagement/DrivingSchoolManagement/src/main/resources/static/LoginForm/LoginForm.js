@@ -26,9 +26,16 @@ function login() {
         } else if (data.userRole === "Instructor") {
           localStorage.setItem("insID", data.insID);
           window.location.href = "../InstructorPortal/sidebar.html";
-        } else if (data.userRole === "Student") {
-          window.location.href = "../DrivingSchool/studentDashboard.html";
-        } else {
+        }  else if (data.userRole === "Student") {
+          if (data.studentRegistered) {
+            localStorage.setItem("stuID", data.stuID);
+            window.location.href = "../StudentPortal/sidebar.html";
+          } else {
+            localStorage.setItem("userID", data.userID);
+            console.log("User ID:", data.userID);
+            window.location.href = "../SchoolCompare/SchoolCompare.html";
+          }
+        }else {
           alert("Invalid User Role");
         }
       } else {

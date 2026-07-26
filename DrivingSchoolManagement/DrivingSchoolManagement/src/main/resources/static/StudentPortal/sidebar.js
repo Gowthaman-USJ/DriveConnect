@@ -1,5 +1,4 @@
 window.addEventListener("load", () => {
-  // Always open Dashboard when the portal starts
   loadPage("Dashboard.html", "dashboard", false);
 });
 
@@ -20,16 +19,11 @@ function loadPage(page, menu, addHistory = true) {
         return;
       }
 
-      // Load page
       container.innerHTML = html;
-
-      // Scroll to top
       container.scrollTop = 0;
       window.scrollTo(0, 0);
 
-      // Set active sidebar menu
       setActive(menu);
-      // Add browser history
       if (addHistory) {
         history.pushState(
           {
@@ -41,7 +35,6 @@ function loadPage(page, menu, addHistory = true) {
         );
       }
 
-      // Run page-specific functions
       initPage(page);
     })
     .catch((error) => {
@@ -59,14 +52,12 @@ function loadPage(page, menu, addHistory = true) {
     });
 }
 
-// Browser Back / Forward
 window.addEventListener("popstate", (event) => {
   if (event.state) {
     loadPage(event.state.page, event.state.menu, false);
   }
 });
 
-// Page-specific initialization
 async function initPage(page) {
   if (page === "Dashboard.html") {
     setGreeting();
@@ -87,24 +78,20 @@ async function initPage(page) {
   }
 }
 
-// Set active sidebar menu
 function setActive(menu) {
-  // Remove active from all links
   document.querySelectorAll(".nl").forEach((link) => {
     link.classList.remove("active");
   });
 
-  // Find matching menu
   const activeLink = document.querySelector(`[onclick*="'${menu}'"]`);
-
-  // Add active
   if (activeLink) {
     activeLink.classList.add("active");
   }
 }
 
 async function loadDrivingSchool() {
-  const response = await fetch(`http://localhost:8080/api/login/student/1`);
+  const stuID = localStorage.getItem("stuID");
+  const response = await fetch(`/api/stuportal/student/${stuID}`);
 
   const student = await response.json();
 
